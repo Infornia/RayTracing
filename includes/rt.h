@@ -6,7 +6,7 @@
 /*   By: mwilk <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/15 13:12:50 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/06/15 15:33:51 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct			s_data
 	void			*mlx;
 	void			*win;
 	void		*img;
-	char		*data_img;
+	char		*dimg;
 	int			bpp;
 	int			size;
 	int			endian;

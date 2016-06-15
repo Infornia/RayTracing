@@ -2,11 +2,12 @@ NAME =		rt
 
 CC =		clang
 
-CFLAGS +=	-Werror -Weverything
+CFLAGS +=	-Weverything
+#CFLAGS +=	-Werror
 
-SRC =		$(shell ls -1 SOURCES)
+SRC =		$(shell ls -1 sources)
 
-INC	=		-I INCLUDES/
+INC	=		-I includes/
 INC +=		-I libft/includes/
 INC +=		-I minilibx/
 
@@ -40,7 +41,7 @@ $(NAME): 	obj $(OBJ)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIB)
 	@$(ECHO) "[\033[1;32m√\033[m]" $@
 
-obj/%.o:	SOURCES/%.c
+obj/%.o:	sources/%.c
 	@$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 	@$(ECHO) "[\033[1;32m√\033[m]" $@
 

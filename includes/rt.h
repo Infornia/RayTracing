@@ -6,7 +6,7 @@
 /*   By: mwilk <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/15 15:33:51 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/06/15 17:12:42 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,17 @@
 
 typedef struct			s_data
 {
-	void			*mlx;
-	void			*win;
-	void		*img;
-	char		*dimg;
-	int			bpp;
-	int			size;
-	int			endian;
-	int			max_size;
-	int			w;
-	int			h;
+	void				*mlx;
+	void				*win;
+	void				*img;
+	char				*dimg;
+	int					bpp;
+	int					size;
+	int					endian;
+	int					w;
+	int					h;
+	unsigned int		max_size;
+	float				dmin;
 }					t_data;
 
 /*

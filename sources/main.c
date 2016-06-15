@@ -6,12 +6,19 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 15:48:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/15 15:39:42 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/06/15 17:36:21 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include <time.h>
+
+void			destroy_mlx(t_data *d);
+t_data			*init(void);
+void			color_pixel(t_data *d, unsigned int col, int x, int y);
+void			render(t_data *d);
+
+
 
 void			destroy_mlx(t_data *d)
 {
@@ -28,21 +35,35 @@ void			destroy_mlx(t_data *d)
 
 void			color_pixel(t_data *d, unsigned int col, int x, int y)
 {
-	int i;
-	i = x * d->bpp + y * d->size;
+	unsigned int i;
+	i = (unsigned int)(x * d->bpp * 0.125 + y * d->size);
 	if (i > 0 && i < d->max_size)
 	{
-		d->dimg[i] = col;
-		d->dimg[i + 1] = col >> 8;
-		d->dimg[i + 2] = col >> 16;
+		d->dimg[i] = (char)col;
+		d->dimg[i + 1] = (char)(col >> 8);
+		d->dimg[i + 2] = (char)(col >> 16);
+	}
+}
+
+void			render(t_data *d)
+{
+	int i = X_WIN;
+	int j = Y_WIN;
+
+	while (--i > 0)
+	{
+		j = Y_WIN;
+		while (--j > 0)
+		{
+			d->dmin= INFINITY;
+			color_pixel(d, CPINK, i, j);
+		}
 	}
 }
 
 int				expose_hook(t_data *d)
 {
-	int i = 10;
-	while (--i)
-		color_pixel(d, CRED, i * 5, i * 7);
+	render(d);
 	mlx_do_sync(d->mlx);
 	mlx_put_image_to_window(d->mlx, d->win, d->img, 0, 0);
 	return (1);
@@ -86,7 +107,7 @@ t_data			*init(void)
 	d->win = mlx_new_window(d->mlx, X_WIN, Y_WIN, "RT");
 	d->img = mlx_new_image(d->mlx, X_WIN, Y_WIN);
 	d->dimg = mlx_get_data_addr(d->img, &d->bpp, &d->size, &d->endian);
-	d->max_size = d->size * Y_WIN + d->bpp * X_WIN;
+	d->max_size = (unsigned int)(d->size * Y_WIN + d->bpp * X_WIN);
 	return (d);
 }
 

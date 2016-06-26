@@ -6,7 +6,7 @@
 /*   By: mwilk <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/15 17:12:42 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/06/26 20:24:45 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
+# include <time.h>
 # include "../libft/includes/libft.h"
 
 /*
@@ -96,6 +97,27 @@
 **Structures
 */
 
+typedef struct			s_point
+{
+	int					x;
+	int					y;
+	int					z;
+}						t_point;
+
+typedef struct			s_ray
+{
+	t_point				p;
+	int					dirx;
+	int					diry;
+	int					dirz;
+}						t_ray;
+
+typedef struct			s_cam
+{
+	float				f;
+
+}						t_cam;
+
 typedef struct			s_data
 {
 	void				*mlx;
@@ -109,7 +131,9 @@ typedef struct			s_data
 	int					h;
 	unsigned int		max_size;
 	float				dmin;
-}					t_data;
+	size_t				lastime;
+	size_t				time;
+}						t_data;
 
 /*
 **Prototypes

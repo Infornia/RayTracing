@@ -6,12 +6,11 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 15:48:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/15 17:36:21 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/06/26 20:27:54 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-#include <time.h>
 
 void			destroy_mlx(t_data *d);
 t_data			*init(void);
@@ -36,8 +35,8 @@ void			destroy_mlx(t_data *d)
 void			color_pixel(t_data *d, unsigned int col, int x, int y)
 {
 	unsigned int i;
-	i = (unsigned int)(x * d->bpp * 0.125 + y * d->size);
-	if (i > 0 && i < d->max_size)
+	i = (unsigned int)((X_HALF + x) * d->bpp + (Y_HALF + y) * d->size);
+	if (i < d->max_size)
 	{
 		d->dimg[i] = (char)col;
 		d->dimg[i + 1] = (char)(col >> 8);
@@ -47,13 +46,13 @@ void			color_pixel(t_data *d, unsigned int col, int x, int y)
 
 void			render(t_data *d)
 {
-	int i = X_WIN;
-	int j = Y_WIN;
+	int i = X_HALF;
+	int j;
 
-	while (--i > 0)
+	while (--i > -X_HALF)
 	{
-		j = Y_WIN;
-		while (--j > 0)
+		j = Y_HALF;
+		while (--j > -Y_HALF)
 		{
 			d->dmin= INFINITY;
 			color_pixel(d, CPINK, i, j);
@@ -63,8 +62,13 @@ void			render(t_data *d)
 
 int				expose_hook(t_data *d)
 {
+	double	dframe;
+
+	d->lastime = clock();
 	render(d);
-	mlx_do_sync(d->mlx);
+	d->time = clock();
+	dframe = d->time - d->lastime;
+	printf("last %zu, now %zu, Delta %f\n", d->time, d->lastime, dframe);
 	mlx_put_image_to_window(d->mlx, d->win, d->img, 0, 0);
 	return (1);
 }
@@ -73,23 +77,23 @@ int				key_hook(int key, t_data *d)
 {
 	if (key == ESC)
 		destroy_mlx(d);
+	expose_hook(d);
 	return (1);
 }
 
 int				mouse_hook(int b, int x, int y, t_data *d)
 {
-	(void)b;
-	(void)x;
-	(void)y;
+	printf("But: %i, x: %i, y: %i\n", b, x, y);
 	(void)d;
+	expose_hook(d);
 	return (1);
 }
 
 int				mouse_hook_move(int x, int y, t_data *d)
 {
-	(void)x;
-	(void)y;
+	printf("x: %i, y: %i\n", x, y);
 	(void)d;
+	expose_hook(d);
 	return (1);
 }
 
@@ -107,6 +111,7 @@ t_data			*init(void)
 	d->win = mlx_new_window(d->mlx, X_WIN, Y_WIN, "RT");
 	d->img = mlx_new_image(d->mlx, X_WIN, Y_WIN);
 	d->dimg = mlx_get_data_addr(d->img, &d->bpp, &d->size, &d->endian);
+	d->bpp /= 8;
 	d->max_size = (unsigned int)(d->size * Y_WIN + d->bpp * X_WIN);
 	return (d);
 }

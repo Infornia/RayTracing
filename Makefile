@@ -2,7 +2,8 @@ NAME =		rt
 
 CC =		clang
 
-CFLAGS +=	-Weverything
+CFLAGS +=	-Wall -Wextra
+#CFLAGS +=	-Weverything
 #CFLAGS +=	-Werror
 
 SRC =		$(shell ls -1 sources)

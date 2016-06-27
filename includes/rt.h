@@ -6,7 +6,7 @@
 /*   By: mwilk <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/26 20:24:45 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/06/27 17:10:48 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,7 @@
 # define Y_WIN 600
 # define Y_HALF Y_WIN / 2
 # define X_HALF X_WIN / 2
-# define NB_FRACTAL 8
-# define NB_PAL 7
-# define NB_TREE_COLORS 7
-# define NB_TRI_COLORS 4
-# define NB_TRI_OPT 3
 
-/*
-** Textures
-*/
-# define T_PAL			"textures/pal.xpm"
-# define T_PAL1			"textures/pal1.xpm"
-# define T_PAL2			"textures/pal2.xpm"
-# define T_PAL3			"textures/pal3.xpm"
-# define T_PAL4			"textures/pal4.xpm"
-# define T_PAL5			"textures/pal5.xpm"
-# define T_PAL6			"textures/pal6.xpm"
 
 /*
 **Colors
@@ -97,29 +82,48 @@
 **Structures
 */
 
-typedef struct			s_point
+typedef struct			s_vec3
 {
-	int					x;
-	int					y;
-	int					z;
-}						t_point;
+	float				x;
+	float				y;
+	float				z;
+}						t_vec3;
 
 typedef struct			s_ray
 {
-	t_point				p;
-	int					dirx;
-	int					diry;
-	int					dirz;
+	t_vec3				o;
+	t_vec3				v;
+	float				t;
 }						t_ray;
 
 typedef struct			s_cam
 {
+	t_vec3				v;
+	float				p[3];
+	float				w;
+	float				h;
 	float				f;
+	float				upleft;
 
 }						t_cam;
 
+typedef struct			s_sphere
+{
+	t_vec3				p;
+	double				r;
+}						t_sphere;
+
+typedef struct			s_intersection
+{
+	float				d;
+	float				n;
+	float				p[3];
+}						t_intersection;
+
 typedef struct			s_data
 {
+	t_cam				c;
+	t_ray				r;
 	void				*mlx;
 	void				*win;
 	void				*img;
@@ -127,10 +131,10 @@ typedef struct			s_data
 	int					bpp;
 	int					size;
 	int					endian;
-	int					w;
-	int					h;
 	unsigned int		max_size;
+
 	float				dmin;
+
 	size_t				lastime;
 	size_t				time;
 }						t_data;

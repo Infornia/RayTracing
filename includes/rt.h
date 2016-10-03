@@ -6,7 +6,7 @@
 /*   By: mwilk <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/27 17:10:48 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/03 19:26:11 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,18 @@ typedef struct			s_vec3
 typedef struct			s_ray
 {
 	t_vec3				o;
-	t_vec3				v;
+	t_vec3				vd;
 	float				t;
 }						t_ray;
 
 typedef struct			s_cam
 {
 	t_vec3				v;
-	float				p[3];
+	t_vec3				p;
 	float				w;
 	float				h;
 	float				f;
-	float				upleft;
+	t_vec3				upleft;
 
 }						t_cam;
 
@@ -156,5 +156,13 @@ int				expose_hook(t_data *d);
 int				mouse_hook(int button, int x, int y, t_data *d);
 int				mouse_hook_move(int x, int y, t_data *d);
 int				key_hook(int keycode, t_data *d);
+
+/*
+*******************VECTORS
+*/
+t_vec3			normalize(t_vec3 v);
+t_vec3		vecsub(t_vec3 *a, t_vec3 *b);
+t_vec3		vecadd(t_vec3 *a, t_vec3 *b);
+double		vecdot(t_vec3 *a, t_vec3 *b);
 
 #endif

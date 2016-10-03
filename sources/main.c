@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 15:48:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/06/27 19:41:15 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/03 19:32:19 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,100 +44,92 @@ void			color_pixel(t_data *d, unsigned int col, int x, int y)
 	}
 }
 
-t_vec3		vecsub(t_vec3 *a, t_vec3 *b)
+double			solve_2nd_deg(double a, double b, double c)
 {
-	t_vec3	v;
+	float	d;
+	double	ret;
+	double	ret2;
 
-	v.x = a->x - b->x;
-	v.y = a->y - b->y;
-	v.z = a->z - b->z;
-	return (v);
-}
-
-double			vecdot(t_vec3 *a, t_vec3 *b)
-{
-	return ((a->x * b->x) + (a->y * b->y) + (a->z * b->z));
-}
-
-int				hitsphere(t_ray *r, t_sphere *s)
-{
-	t_vec3	dist;
-	double	b;
-	double	d;
-	double	t0;
-	double	t1;
-	int		ret;
-
-	dist.x = s.p.x - r.o.x;
-	dist.y = s.p.y - r.o.y;
-	dist.z = s->p.z - r->o.z;
-	b = r->v.z * dist.z;
-	d = b * b - dist.z * dist.z + s->r * s->r;
+	d = (b * b) - (4 * a * c);
 	ret = 0;
-	if (d < 0.0f)
-		return (0);
-	t0 = b - sqrtf(d);
-	t1 = b + sqrtf(d);
-	if ((t0 > 0.1f) && (t0 < r->t) && (ret = 1))
-		r->t = t0;
-	if ((t1 > 0.1f) && (t1 < r->t) && (ret = 1))
-		r->t = t1;
-	printf("t0: %f, t1: %f, t: %f,\n", t0, t1, r->t);
+	if (d > 0)
+	{
+		d = sqrt(d);
+		ret = (-b - d) / (2 * a);
+		ret2 = (-b + d) / (2 * a);
+		if (ret2 < ret)
+			ret = ret2;
+	}
 	return (ret);
 }
 
-void				next(t_data *d, int x, int y)
+double			hitsphere(t_data *d, t_sphere *s)
 {
-	float		color = 0;
-	float		coef = 1;
-	int			level = 1;
-	t_ray		r;
+	double	a;
+	double	b;
+	double	c;
+	double	t;
+
+	a = vecdot(&d->r.vd, &d->r.vd);
+	b = 2 * d->r.vd.x * (d->r.o.x - s->p.x);
+	b += 2 * d->r.vd.y * (d->r.o.y - s->p.y);
+	b += 2 * d->r.vd.z * (d->r.o.z - s->p.z);
+	c = (d->r.o.x - s->p.x) * (d->r.o.x - s->p.x);
+	c += (d->r.o.y - s->p.y) * (d->r.o.y - s->p.y);
+	c += (d->r.o.z - s->p.z) * (d->r.o.z - s->p.z);
+	c -= s->r * s->r;
+	t = solve_2nd_deg(a, b ,c);
+	return (t);
+}
+
+t_vec3			get_ray_dir(t_data *d, int x, int y)
+{
+	t_vec3	dir;
+
+	dir.x = (2.0f * ((x + 0.5f) / X_WIN) - 1.0);
+	dir.y = (1.0f - 2.0f * ((y + 0.5) / Y_WIN));
+	dir.z = -1;
+	dir = normalize(dir);
+	return (dir);
+}
+
+t_sphere		create_sphere(int x, int y, int z, int r)
+{
 	t_sphere	s;
+	t_vec3		p;
 
-	r.o.x = x;
-	r.o.y = y;
-	r.o.z = -10000.0f;
-	r.v.x = 0.0f;
-	r.v.y = 0.0f;
-	r.v.z = 1.0f;
-	s.p.x = 0.0f;
-	s.p.y = 0.0f;
-	s.p.z = 100.0f;
-	s.r = 1.0f;
-	while ((coef > 0.0f) && (level < 10))
-	{
-		//INTERS
-		int		sphere_cur = -1;
-		int		i = 0;
-		float	newstart;
+	p.x = x;
+	p.y = y;
+	p.z = z;
+	s.p = p;
+	s.r = r;
+	return (s);
+}
 
-		r.t = 20000.0f;
-		if (hitsphere(&r, &s))
-		{
-			color = CQUOISE;
-			sphere_cur = 1;
-		}
-		else
-			break ;
-		newstart = r.o.z + r.t * r.v.z;
-		r.o.z = newstart;
-	}
-	color_pixel(d, color, x, y);
+
+void			find_closest_intersection(t_data *d, t_sphere *s, int x, int y)
+{
+	d->r.vd = get_ray_dir(d, x, y);
+	if (hitsphere(d, s))
+		color_pixel(d, CPINK, x, y);
 }
 
 void			render(t_data *d)
 {
-	int			i = X_HALF;
+	t_sphere	s;
+	int			i;
 	int			j;
 
-	while (--i > -X_HALF)
+	i = -X_HALF;
+	j = Y_HALF;
+	printf("I and J %i, %i\n", i, j);
+	while (--j > -Y_HALF)
 	{
-		j = Y_HALF;
-		while (--j > -Y_HALF)
+		i = -X_HALF;
+		while (++i < X_HALF)
 		{
-			next(d, i, j);
-			d->dmin= INFINITY;
-//			color_pixel(d, CPINK, i, j);
+			s = create_sphere(0, 0, 100, 2);
+			find_closest_intersection(d, &s, i, j);
 		}
 	}
 }
@@ -162,20 +154,6 @@ int				key_hook(int key, t_data *d)
 	return (1);
 }
 
-int					mouse_hook(int b, int x, int y, t_data *d)
-{
-	printf("But: %i, x: %i, y: %i\n", b, x, y);
-	(void)d;
-	return (1);
-}
-
-int					mouse_hook_move(int x, int y, t_data *d)
-{
-	printf("x: %i, y: %i\n", x, y);
-	(void)d;
-	return (1);
-}
-
 static void		print_usage(void)
 {
 	tt_pl("Usage: ./rt [scene]");
@@ -188,18 +166,23 @@ int					ray_sphere(t_cam *c, t_sphere s)
 	return (1);
 }
 
-void				init_cam(t_data *d)
+void				init_cam(t_cam *c)
 {
-	d->c.w = 0.35f;
-	d->c.h = 0.5f;
-	d->c.f = 1.0f;
-	d->c.p[0] = 0;
-	d->c.p[1] = 0;
-	d->c.p[2] = 0;
-	d->c.v.x = 1;
-	d->c.v.y = 1;
-	d->c.v.z = 1;
+	t_vec3	v;
 
+	v.x = -X_HALF;
+	v.y = Y_HALF;
+	v.z = c->f;
+	c->upleft = normalize(v);
+	c->w = 0.35f;
+	c->h = 0.5f;
+	c->f = 1.0f;
+	c->p.x = 0;
+	c->p.y = 0;
+	c->p.z = 0;
+	c->v.x = 1;
+	c->v.y = 1;
+	c->v.z = 1;
 }
 
 t_data			*init(void)
@@ -213,6 +196,8 @@ t_data			*init(void)
 	d->dimg = mlx_get_data_addr(d->img, &d->bpp, &d->size, &d->endian);
 	d->bpp /= 8;
 	d->max_size = (unsigned int)(d->size * Y_WIN + d->bpp * X_WIN);
+	init_cam(&d->c);
+	printf("upleft cood %f, %f, %f\n", d->c.upleft.x, d->c.upleft.y, d->c.upleft.z);
 	return (d);
 }
 
@@ -226,8 +211,6 @@ int				main(int ac, char **av)
 	{
 		d = (t_data *)init();
 		mlx_hook(d->win, 2, 1, key_hook, d);
-		mlx_hook(d->win, 4, 4, mouse_hook, d);
-		mlx_hook(d->win, 6, 16, mouse_hook_move, d);
 		mlx_expose_hook(d->win, expose_hook, d);
 		mlx_loop(d->mlx);
 	}

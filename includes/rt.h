@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwilk <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/03 19:26:11 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/04 17:23:00 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define Y_WIN 600
 # define Y_HALF Y_WIN / 2
 # define X_HALF X_WIN / 2
+# define FOV tan(20 * M_PI) / 180
 
 
 /*
@@ -75,6 +76,8 @@
 # define NUM5		87
 # define NUM6		88
 # define KEYR		15
+# define SPACE		49
+# define CTRL		269
 # define ZOOM_IN_M	5
 # define ZOOM_OUT_M	4
 
@@ -131,7 +134,10 @@ typedef struct			s_data
 	int					bpp;
 	int					size;
 	int					endian;
+	double				fov;
 	unsigned int		max_size;
+	int					ud;
+	int					lr;
 
 	float				dmin;
 
@@ -147,6 +153,17 @@ typedef struct			s_data
 *******************INIT
 */
 
+t_data			*init(void);
+void			init_cam(t_cam *c);
+
+/*
+*******************DRAW
+*/
+
+void			draw(t_data *d);
+void			render(t_data *d);
+void			color_pixel(t_data *d, unsigned int col, int x, int y);
+
 
 /*
 *******************HOOKS
@@ -161,8 +178,59 @@ int				key_hook(int keycode, t_data *d);
 *******************VECTORS
 */
 t_vec3			normalize(t_vec3 v);
-t_vec3		vecsub(t_vec3 *a, t_vec3 *b);
-t_vec3		vecadd(t_vec3 *a, t_vec3 *b);
-double		vecdot(t_vec3 *a, t_vec3 *b);
+t_vec3			vecsub(t_vec3 *a, t_vec3 *b);
+t_vec3			vecadd(t_vec3 *a, t_vec3 *b);
+double			vecdot(t_vec3 *a, t_vec3 *b);
+
+/*
+*******************MLX
+*/
+
+void			destroy_mlx(t_data *d);
+
+/*
+*******************HOOKS
+*/
+
+int				expose_hook(t_data *d);
+int				key_hook(int key, t_data *d);
+
+/*
+*******************CALCULATE
+*/
+
+double			solve_2nd_deg(double a, double b, double c);
+t_vec3			get_ray_dir(t_data *d, int x, int y);
+void			find_closest_intersection(t_data *d, t_sphere *s, int x, int y);
+
+
+/*
+*******************OBJECTS
+*/
+
+double			hitsphere(t_data *d, t_sphere *s);
+t_sphere		create_sphere(int x, int y, int z, int r);
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwilk <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/03 17:42:02 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/03 19:29:05 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/04 16:52:34 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_vec3			normalize(t_vec3 v)
 	float l;
 
 	l = sqrtf((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
-	v.x /= (float)l;
-	v.y /= (float)l;
-	v.z /= (float)l;
+	v.x /= l;
+	v.y /= l;
+	v.z /= l;
 	return (v);
 }
 

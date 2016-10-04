@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/04 17:27:00 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/04 20:32:14 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,26 @@ double			solve_2nd_deg(double a, double b, double c)
 	return (ret);
 }
 
-void			find_closest_intersection(t_data *d, t_sphere *s, int x, int y)
+void			find_closest_intersection(t_data *d, t_object *o, int x, int y)
 {
+	float tmin;
 	float t;
 	
 	d->r.o = d->c.p;
 	d->r.vd = get_ray_dir(d, x, y);
-	t = hitsphere(d,s);
-	if (t > 0.01)//EPSILON
-		color_pixel(d, CPINK, x, y);
+	tmin = 1000.0;
+	t = 0.0;
+	// if (o->type == SPHERE)
+		tmin = (t = hitsphere(d,&o->s)) < tmin && t > 0 ? t : tmin;
+	if (o->type == PLANE)
+		tmin = (t = hitplane(d,&o->p)) < tmin && t > 0 ? t : tmin;
+	if (tmin > 0.01 && tmin < 1000)//EPSILON
+	{
+		if (o->type == SPHERE)
+			color_pixel(d, CPINK, x, y);
+		else if (o->type == PLANE)
+			color_pixel(d, CWHITE, x, y);
+	}
 	else
 		color_pixel(d, CBLACK, x, y);
 }

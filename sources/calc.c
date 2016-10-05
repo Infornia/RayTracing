@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/05 17:53:31 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/05 19:16:56 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,38 @@ double			solve_2nd_deg(double a, double b, double c)
 
 void			find_closest_intersection(t_data *d, t_object *o, int x, int y)
 {
-	float tmin;
-	float t;
+	float		t;
+	float		tmin;
+	int			i;
+	t_object	*ret;
+	t_object	*tmp;
 	
 	d->r.o = d->c.p;
 	d->r.vd = get_ray_dir(d, x, y);
-	tmin = 1000.0;
 	t = 0.0;
-	// if (o->type == SPHERE)
-		tmin = (t = hitsphere(d,o->obj)) < tmin && t > 0 ? t : tmin;
-	if (o->type == PLANE)
-		tmin = (t = hitplane(d,o->obj)) < tmin && t > 0 ? t : tmin;
+	ret = o;
+	tmp = o->next;
+	tmin = 1000.0;
+	i = 0;
+	while (++i < d->nb_obj)
+	{
+		if (tmp->type == SPHERE)
+			t = hitsphere(d,tmp->obj);
+		if (tmp->type == PLANE)
+			t = hitplane(d,tmp->obj);
+		if (t < tmin)
+		{
+			ret = tmp;
+			tmin = t;
+		}
+		tmp = tmp->next;
+	}
+	// return (ret);
 	if (tmin > 0.01 && tmin < 1000)//EPSILON
 	{
-		if (o->type == SPHERE)
+		if (ret->type == SPHERE)
 			color_pixel(d, CPINK, x, y);
-		else if (o->type == PLANE)
+		else if (ret->type == PLANE)
 			color_pixel(d, CWHITE, x, y);
 	}
 	else

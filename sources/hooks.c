@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:19:54 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/04 17:02:44 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/05 18:48:49 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int				key_hook(int key, t_data *d)
 		--d->c.p.x;
 	else if (key == RIGHT)
 		++d->c.p.x;
-	else if (key == SPACE)
+	else if (key == PLUS)
 		++d->c.p.y;
-	else if (key == CTRL)
+	else if (key == MINUS)
 		--d->c.p.y;
 
 	draw(d);

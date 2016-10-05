@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/05 17:53:02 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/05 18:48:23 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@
 # define RIGHT		124
 # define TAB		48
 # define SHIFT		257
-# define ZOOM_IN	24
-# define ZOOM_OUT	27
-# define IT_UP	30
+# define PLUS		24
+# define MINUS		27
+# define IT_UP		30
 # define IT_DOWN	33
 # define OPT_UP		39
 # define OPT_DOWN	41
@@ -131,8 +131,11 @@ typedef struct			s_plane
 
 typedef struct			s_object
 {
-	int					type;
 	void				*obj;
+	int					type;
+	int					color;
+	float				tmin;
+	struct s_object		*next;
 }						t_object;
 
 typedef struct			s_intersection
@@ -156,11 +159,8 @@ typedef struct			s_data
 	int					endian;
 	double				fov;
 	unsigned int		max_size;
-	int					ud;
-	int					lr;
 
-	float				dmin;
-
+	int					nb_obj;
 	size_t				lastime;
 	size_t				time;
 }						t_data;

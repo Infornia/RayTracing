@@ -6,22 +6,23 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:10:59 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/04 20:09:39 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/05 17:48:57 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_sphere		create_sphere(int x, int y, int z, int r)
+t_sphere		*create_sphere(int x, int y, int z, int r)
 {
-	t_sphere	s;
+	t_sphere	*s;
 	t_vec3		p;
 
+	s = tt_malloc(sizeof(t_sphere));
 	p.x = x;
 	p.y = y;
 	p.z = z;
-	s.p = p;
-	s.r = r;
+	s->p = p;
+	s->r = r;
 	return (s);
 }
 

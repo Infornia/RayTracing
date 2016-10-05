@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/04 20:32:14 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/05 17:53:31 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void			find_closest_intersection(t_data *d, t_object *o, int x, int y)
 	tmin = 1000.0;
 	t = 0.0;
 	// if (o->type == SPHERE)
-		tmin = (t = hitsphere(d,&o->s)) < tmin && t > 0 ? t : tmin;
+		tmin = (t = hitsphere(d,o->obj)) < tmin && t > 0 ? t : tmin;
 	if (o->type == PLANE)
-		tmin = (t = hitplane(d,&o->p)) < tmin && t > 0 ? t : tmin;
+		tmin = (t = hitplane(d,o->obj)) < tmin && t > 0 ? t : tmin;
 	if (tmin > 0.01 && tmin < 1000)//EPSILON
 	{
 		if (o->type == SPHERE)

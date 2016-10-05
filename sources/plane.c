@@ -6,23 +6,23 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 18:21:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/04 20:21:26 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/05 17:54:10 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_plane		create_plane(float vx, float vy, float vz, float d)
+t_plane		*create_plane(float vx, float vy, float vz, float d)
 {
-	t_plane		plane;
+	t_plane		*plane;
 	t_vec3		vd;
 
+	plane = tt_malloc(sizeof(t_plane));
 	vd.x = vx;
 	vd.y = vy;
 	vd.z = vz;
-	plane.vd = vd;
-	plane.offset = d;
-	
+	plane->vd = vd;
+	plane->offset = d;
 	return (plane);
 }
 

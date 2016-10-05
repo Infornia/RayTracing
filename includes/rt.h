@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/04 20:46:07 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/05 17:53:02 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 **Parameters
 */
 
-# define X_WIN 1600
-# define Y_WIN 1200
+# define X_WIN 800
+# define Y_WIN 600
 # define Y_HALF Y_WIN / 2
 # define X_HALF X_WIN / 2
 # define FOV tan(20 * M_PI) / 180
@@ -132,8 +132,7 @@ typedef struct			s_plane
 typedef struct			s_object
 {
 	int					type;
-	t_sphere			s;
-	t_plane				p;
+	void				*obj;
 }						t_object;
 
 typedef struct			s_intersection
@@ -147,6 +146,7 @@ typedef struct			s_data
 {
 	t_cam				c;
 	t_ray				r;
+	t_object			*o;
 	void				*mlx;
 	void				*win;
 	void				*img;
@@ -174,7 +174,6 @@ typedef struct			s_data
 */
 
 t_data			*init(void);
-void			init_cam(t_cam *c);
 
 /*
 *******************DRAW
@@ -231,8 +230,8 @@ void			find_closest_intersection(t_data *d, t_object *o, int x, int y);
 double			hitsphere(t_data *d, t_sphere *s);
 double			hitplane(t_data *d, t_plane *p);
 void			new_object(t_object *o, int type);
-t_sphere		create_sphere(int x, int y, int z, int r);
-t_plane			create_plane(float vx, float vy, float vz, float d);
+t_sphere		*create_sphere(int x, int y, int z, int r);
+t_plane			*create_plane(float vx, float vy, float vz, float d);
 
 #endif
 

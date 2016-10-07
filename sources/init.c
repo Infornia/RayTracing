@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/05 19:16:48 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/07 12:27:54 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void		init_obj(t_data *d)
 {
-	d->nb_obj = 1;
+	d->nb_obj = 2;
 	d->o = tt_malloc(sizeof(t_object));
 	d->o->next = tt_malloc(sizeof(t_object));
-	d->o->obj = create_plane(0, 1, 0, 0);
-	d->o->type = PLANE;
-	d->o->next->obj = create_sphere(0, 0, 0, 3);
-	d->o->next->type = SPHERE;
+	d->o->obj = create_sphere(0, 0, 0, 3);
+	d->o->type = SPHERE;
+	d->o->next->obj = create_plane(0, 1, 0, 0);
+	d->o->next->type = PLANE;
 }
 
 static void				init_cam(t_cam *c)

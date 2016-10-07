@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/05 18:48:23 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/07 12:22:13 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@
 # define CTRL		269
 # define ZOOM_IN_M	5
 # define ZOOM_OUT_M	4
+# define EPSILON	0.001
 
 /*
 ** Objects
@@ -160,6 +161,7 @@ typedef struct			s_data
 	double				fov;
 	unsigned int		max_size;
 
+	float				tmin;
 	int					nb_obj;
 	size_t				lastime;
 	size_t				time;
@@ -220,7 +222,8 @@ int				key_hook(int key, t_data *d);
 
 double			solve_2nd_deg(double a, double b, double c);
 t_vec3			get_ray_dir(t_data *d, int x, int y);
-void			find_closest_intersection(t_data *d, t_object *o, int x, int y);
+t_object		*find_closest_intersection(t_data *d, t_object *o);
+void			compute_color(t_data *d, t_object *o, int x, int y);
 
 
 /*

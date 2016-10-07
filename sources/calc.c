@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 12:21:35 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/07 13:14:47 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,16 @@ double			solve_2nd_deg(double a, double b, double c)
 
 void		compute_color(t_data *d, t_object *o, int x, int y)
 {
+	int		col;
+	
+	col = RGB(o->color.r, o->color.g, o->color.b);
+	// t_color	c;
+	// 
+	// put_col(c, CBLACK);
 	if (o->type == SPHERE)
-		color_pixel(d, CPINK, x, y);
+		color_pixel(d, col, x, y);
 	else if (o->type == PLANE)
-		color_pixel(d, CWHITE, x, y);
+		color_pixel(d, col, x, y);
 }
 
 t_object		*find_closest_intersection(t_data *d, t_object *o)

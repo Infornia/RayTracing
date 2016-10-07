@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 12:22:13 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/07 15:28:23 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@
 # define CWHITE 	0xFFFFFF
 # define CGRAY 		0x0F0F0F
 # define CBLACK 	0x000000
+
 # define RGB(r, g, b)(256 * 256 * (int)(r) + 256 * (int)(g) + (int)(b))
+# define R_COL(c)	(c) & 0xFF	
+# define G_COL(c)	(c >> 8) & 0xFF	
+# define B_COL(c)	(c >> 16) & 0xFF	
+
 # define ABS(x)		((x) < 0 ? -(x) : (x))
 
 /*
@@ -86,8 +91,9 @@
 ** Objects
 */
 
-#define SPHERE	0
-#define PLANE	1
+# define NB_OBJECT_TYPE	2
+# define SPHERE	0
+# define PLANE	1
 
 /*
 **Structures
@@ -130,13 +136,34 @@ typedef struct			s_plane
 	double				offset;
 }						t_plane;
 
+
+typedef struct			s_color
+{
+	float	r;
+	float	g;
+	float	b;
+}						t_color;
+
 typedef struct			s_object
 {
 	void				*obj;
 	int					type;
-	int					color;
-	float				tmin;
+	
+	t_color				color;
+	int					material;
+	t_color				specular;
+	t_color				diffuse;
+	t_color				ambient;
+	t_color				self_illu;
+	
+	float				shininess;
+	float				shinestrength;
+	float				transmittivity;
+	float				reflectivity;
+	
+	int					permanent;
 	struct s_object		*next;
+	struct s_object		*prev;
 }						t_object;
 
 typedef struct			s_intersection
@@ -184,6 +211,7 @@ t_data			*init(void);
 void			draw(t_data *d);
 void			render(t_data *d);
 void			color_pixel(t_data *d, unsigned int col, int x, int y);
+void		put_col(t_color *c, int col);
 
 
 /*
@@ -232,7 +260,7 @@ void			compute_color(t_data *d, t_object *o, int x, int y);
 
 double			hitsphere(t_data *d, t_sphere *s);
 double			hitplane(t_data *d, t_plane *p);
-void			new_object(t_object *o, int type);
+t_object		*add_object(t_object *o);
 t_sphere		*create_sphere(int x, int y, int z, int r);
 t_plane			*create_plane(float vx, float vy, float vz, float d);
 

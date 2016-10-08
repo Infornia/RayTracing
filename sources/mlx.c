@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 15:48:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/04 16:23:33 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/07 16:36:28 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,14 @@ void			destroy_mlx(t_data *d)
 		free(d->mlx);
 		exit(0);
 	}
+}
+
+void			init_mlx(t_data *d)
+{
+	d->mlx = mlx_init();
+	d->win = mlx_new_window(d->mlx, X_WIN, Y_WIN, "RT");
+	d->img = mlx_new_image(d->mlx, X_WIN, Y_WIN);
+	d->dimg = mlx_get_data_addr(d->img, &d->bpp, &d->size, &d->endian);
+	d->bpp /= 8;
+	d->max_size = (unsigned int)(d->size * Y_WIN + d->bpp * X_WIN);
 }

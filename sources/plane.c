@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 18:21:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/05 17:54:10 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/07 17:17:45 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ t_plane		*create_plane(float vx, float vy, float vz, float d)
 	return (plane);
 }
 
-double			hitplane(t_data *d, t_plane *p)
+double			hitplane(t_ray *r, t_plane *p)
 {
 	double		t;
 
-	t = -((p->vd.x * d->r.o.x + p->vd.y * d->r.o.y + p->vd.z * d->r.o.z + p->offset)
-		/ (d->r.vd.x * p->vd.x + d->r.vd.y * p->vd.y + d->r.vd.z * p->vd.z));
+	t = -((p->vd.x * r->o.x + p->vd.y * r->o.y + p->vd.z * r->o.z + p->offset)
+		/ (r->vd.x * p->vd.x + r->vd.y * p->vd.y + r->vd.z * p->vd.z));
 	return (t);
 }

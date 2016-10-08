@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 15:28:23 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/07 17:18:07 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,230 +22,58 @@
 # include <math.h>
 # include <time.h>
 # include "../libft/includes/libft.h"
-
-/*
-**Parameters
-*/
-
-# define X_WIN 800
-# define Y_WIN 600
-# define Y_HALF Y_WIN / 2
-# define X_HALF X_WIN / 2
-# define FOV tan(20 * M_PI) / 180
-
-
-/*
-**Colors
-*/
-# define CRED		0xFF0000
-# define CGREEN		0x00FF00
-# define CBLUE 		0x0000FF
-# define CQUOISE	0x74BDF9
-# define CGREEN 	0x00FF00
-# define CPINK 		0xFF00FF
-# define CWHITE 	0xFFFFFF
-# define CGRAY 		0x0F0F0F
-# define CBLACK 	0x000000
-
-# define RGB(r, g, b)(256 * 256 * (int)(r) + 256 * (int)(g) + (int)(b))
-# define R_COL(c)	(c) & 0xFF	
-# define G_COL(c)	(c >> 8) & 0xFF	
-# define B_COL(c)	(c >> 16) & 0xFF	
-
-# define ABS(x)		((x) < 0 ? -(x) : (x))
-
-/*
-**keys
-*/
-
-# define ESC		53
-# define UP			126
-# define DOWN		125
-# define LEFT		123
-# define RIGHT		124
-# define TAB		48
-# define SHIFT		257
-# define PLUS		24
-# define MINUS		27
-# define IT_UP		30
-# define IT_DOWN	33
-# define OPT_UP		39
-# define OPT_DOWN	41
-# define KEY1		18
-# define KEY2		19
-# define NUM0		29
-# define NUM1		83
-# define NUM2		84
-# define NUM3		85
-# define NUM4		86
-# define NUM5		87
-# define NUM6		88
-# define KEYR		15
-# define SPACE		49
-# define CTRL		269
-# define ZOOM_IN_M	5
-# define ZOOM_OUT_M	4
-# define EPSILON	0.001
-
-/*
-** Objects
-*/
-
-# define NB_OBJECT_TYPE	2
-# define SPHERE	0
-# define PLANE	1
-
-/*
-**Structures
-*/
-
-typedef struct			s_vec3
-{
-	float				x;
-	float				y;
-	float				z;
-}						t_vec3;
-
-typedef struct			s_ray
-{
-	t_vec3				o;
-	t_vec3				vd;
-	float				t;
-}						t_ray;
-
-typedef struct			s_cam
-{
-	t_vec3				v;
-	t_vec3				p;
-	float				w;
-	float				h;
-	float				f;
-	t_vec3				upleft;
-
-}						t_cam;
-
-typedef struct			s_sphere
-{
-	t_vec3				p;
-	float				r;
-}						t_sphere;
-
-typedef struct			s_plane
-{
-	t_vec3				vd;
-	double				offset;
-}						t_plane;
-
-
-typedef struct			s_color
-{
-	float	r;
-	float	g;
-	float	b;
-}						t_color;
-
-typedef struct			s_object
-{
-	void				*obj;
-	int					type;
-	
-	t_color				color;
-	int					material;
-	t_color				specular;
-	t_color				diffuse;
-	t_color				ambient;
-	t_color				self_illu;
-	
-	float				shininess;
-	float				shinestrength;
-	float				transmittivity;
-	float				reflectivity;
-	
-	int					permanent;
-	struct s_object		*next;
-	struct s_object		*prev;
-}						t_object;
-
-typedef struct			s_intersection
-{
-	float				d;
-	float				n;
-	float				p[3];
-}						t_intersection;
-
-typedef struct			s_data
-{
-	t_cam				c;
-	t_ray				r;
-	t_object			*o;
-	void				*mlx;
-	void				*win;
-	void				*img;
-	char				*dimg;
-	int					bpp;
-	int					size;
-	int					endian;
-	double				fov;
-	unsigned int		max_size;
-
-	float				tmin;
-	int					nb_obj;
-	size_t				lastime;
-	size_t				time;
-}						t_data;
+# include "macro.h"
+# include "struct.h"
 
 /*
 **Prototypes
 */
 
 /*
-*******************INIT
+*******************INIT.C
 */
 
 t_data			*init(void);
 
 /*
-*******************DRAW
+*******************COLOR.C
+*/
+
+void			color_pixel(t_data *d, unsigned int col, int x, int y);
+void			put_col(t_color *c, int col);
+
+/*
+*******************DRAW.C
 */
 
 void			draw(t_data *d);
 void			render(t_data *d);
-void			color_pixel(t_data *d, unsigned int col, int x, int y);
-void		put_col(t_color *c, int col);
-
 
 /*
-*******************HOOKS
-*/
-
-int				expose_hook(t_data *d);
-int				mouse_hook(int button, int x, int y, t_data *d);
-int				mouse_hook_move(int x, int y, t_data *d);
-int				key_hook(int keycode, t_data *d);
-
-/*
-*******************VECTORS
+*******************VECTOR.C
 */
 t_vec3			normalize(t_vec3 v);
-t_vec3			vecsub(t_vec3 *a, t_vec3 *b);
-t_vec3			vecadd(t_vec3 *a, t_vec3 *b);
-double			vecdot(t_vec3 *a, t_vec3 *b);
+t_vec3			vec_sub(t_vec3 *a, t_vec3 *b);
+t_vec3			vec_add(t_vec3 *a, t_vec3 *b);
+double			vec_dot(t_vec3 *a, t_vec3 *b);
+t_vec3			vec_scalar(t_vec3 *v, float coef_mult);
 
 /*
-*******************MLX
+*******************MLX.C
 */
 
+void			init_mlx(t_data *d);
 void			destroy_mlx(t_data *d);
 
 /*
-*******************HOOKS
+*******************HOOKS.C
 */
 
 int				expose_hook(t_data *d);
 int				key_hook(int key, t_data *d);
 
 /*
-*******************CALCULATE
+*******************CALCULATE.C
 */
 
 double			solve_2nd_deg(double a, double b, double c);
@@ -255,14 +83,26 @@ void			compute_color(t_data *d, t_object *o, int x, int y);
 
 
 /*
-*******************OBJECTS
+*******************OBJECT.C
 */
 
-double			hitsphere(t_data *d, t_sphere *s);
-double			hitplane(t_data *d, t_plane *p);
 t_object		*add_object(t_object *o);
+
+/*
+*******************SPHERE.C
+*/
+
 t_sphere		*create_sphere(int x, int y, int z, int r);
+double			hitsphere(t_ray *r, t_sphere *s);
+
+
+/*
+*******************PLANE.C
+*/
+
+double			hitplane(t_ray *r, t_plane *p);
 t_plane			*create_plane(float vx, float vy, float vz, float d);
+
 
 #endif
 

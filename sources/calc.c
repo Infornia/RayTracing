@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 13:14:47 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/08 16:45:16 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ double			solve_2nd_deg(double a, double b, double c)
 
 	d = (b * b) - (4 * a * c);
 	ret = 0;
-	if (d > 0)
+	if (d > 0.0)
 	{
 		d = sqrt(d);
 		ret = (-b - d) / (2 * a);
@@ -39,21 +39,45 @@ double			solve_2nd_deg(double a, double b, double c)
 		if (ret2 < ret)
 			ret = ret2;
 	}
+	else if (d == 0.0)
+	{
+		ret = -b / (2 * a);
+	}
 	return (ret);
 }
 
 void		compute_color(t_data *d, t_object *o, int x, int y)
 {
-	int		col;
+	double		t;
+	double		coef;
+	t_color		c;
+	t_vec3		hitpoint;
+	t_ray		light;
+	t_object	*tmp;
 	
-	col = RGB(o->color.r, o->color.g, o->color.b);
-	// t_color	c;
-	// 
-	// put_col(c, CBLACK);
-	if (o->type == SPHERE)
-		color_pixel(d, col, x, y);
-	else if (o->type == PLANE)
-		color_pixel(d, col, x, y);
+	put_col(&c, RGB(o->color.r, o->color.g, o->color.b));
+	hitpoint = vec_scalar(&d->r.vd, d->tmin);
+	light.o.x = 10;
+	light.o.y = 0;
+	light.o.z = 0;
+	light.vd = normalize(vec_sub(&hitpoint, &light.o));
+	coef = vec_dot(&light.vd, &d->r.vd);
+	tmp = o;
+	if (tmp->type == SPHERE)
+		t = hitsphere(&light,tmp->obj);
+	if (tmp->type == PLANE)
+		t = hitplane(&light,tmp->obj);
+	if (!t && coef > 0)
+	{
+		put_col(&c, RGB(c.r * coef, c.g * coef, c.b * coef));
+		color_pixel(d, RGB(c.r, c.g, c.b), x, y);
+	}
+		
+	
+	// if (tmp->type == SPHERE)
+		// color_pixel(d, col, x, y);
+	// else if (tmp->type == PLANE)
+		// color_pixel(d, col, x, y);
 }
 
 t_object		*find_closest_intersection(t_data *d, t_object *o)
@@ -68,12 +92,12 @@ t_object		*find_closest_intersection(t_data *d, t_object *o)
 	tmp = o;
 	d->tmin = 1000.0;
 	i = -1;
-	while (++i < d->nb_obj)
+	while (tmp)
 	{
 		if (tmp->type == SPHERE)
-			t = hitsphere(d,tmp->obj);
+			t = hitsphere(&d->r, tmp->obj);
 		if (tmp->type == PLANE)
-			t = hitplane(d,tmp->obj);
+			t = hitplane(&d->r, tmp->obj);
 		if (t > EPSILON && t < d->tmin)
 		{
 			ret = tmp;

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 17:18:07 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/08 19:47:42 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void			render(t_data *d);
 *******************VECTOR.C
 */
 t_vec3			normalize(t_vec3 v);
+t_vec3			*vec3_new(float x, float y, float z);
 t_vec3			vec_sub(t_vec3 *a, t_vec3 *b);
 t_vec3			vec_add(t_vec3 *a, t_vec3 *b);
 double			vec_dot(t_vec3 *a, t_vec3 *b);
@@ -103,6 +104,11 @@ double			hitsphere(t_ray *r, t_sphere *s);
 double			hitplane(t_ray *r, t_plane *p);
 t_plane			*create_plane(float vx, float vy, float vz, float d);
 
+/*
+*******************LIGHT.C
+*/
+t_light			*create_light(float x, float y, float z, float r);
+t_light			*add_light(t_light *l);
 
 #endif
 

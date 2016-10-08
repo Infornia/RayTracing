@@ -6,11 +6,21 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 16:54:08 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/08 19:53:48 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+static void		init_light(t_data *d)
+{
+	t_light		*tmp;
+	
+	tmp = create_light(0, 10, -10, 1);
+	d->l = tmp;
+	tmp->type = OMNI;
+	put_col(&tmp->color, CWHITE);
+}
 
 static void		init_obj(t_data *d)
 {
@@ -22,10 +32,10 @@ static void		init_obj(t_data *d)
 	tmp->obj = create_sphere(0, 0, 0, 3);
 	put_col(&tmp->color, CPINK);
 	
-	tmp = add_object(d->o);
-	tmp->obj = create_plane(0, 1, 0, 2);
-	tmp->type = PLANE;
-	put_col(&tmp->color, CWHITE);
+	// tmp = add_object(d->o);
+	// tmp->obj = create_plane(0, 1, 0, 2);
+	// tmp->type = PLANE;
+	// put_col(&tmp->color, CWHITE);
 }
 
 static void				init_cam(t_cam *c)
@@ -43,6 +53,7 @@ t_data			*init(void)
 	init_mlx(d);
 	init_cam(&d->c);
 	init_obj(d);
+	init_light(d);
 	d->fov = tan((20 * M_PI) / 180);
 	printf("upleft cood %f, %f, %f\n", d->c.upleft.x, d->c.upleft.y, d->c.upleft.z);
 	return (d);

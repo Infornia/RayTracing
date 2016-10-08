@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 16:45:16 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/08 19:50:29 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,34 @@ void		compute_color(t_data *d, t_object *o, int x, int y)
 	double		t;
 	double		coef;
 	t_color		c;
-	t_vec3		hitpoint;
-	t_ray		light;
 	t_object	*tmp;
 	
+	t = 0.0;
 	put_col(&c, RGB(o->color.r, o->color.g, o->color.b));
-	hitpoint = vec_scalar(&d->r.vd, d->tmin);
-	light.o.x = 10;
-	light.o.y = 0;
-	light.o.z = 0;
-	light.vd = normalize(vec_sub(&hitpoint, &light.o));
-	coef = vec_dot(&light.vd, &d->r.vd);
+	d->h.p = vec_scalar(&d->r.vd, d->tmin);
+	d->l->r.vd = normalize(vec_sub(&d->h.p, &d->l->r.o));
 	tmp = o;
 	if (tmp->type == SPHERE)
-		t = hitsphere(&light,tmp->obj);
-	if (tmp->type == PLANE)
-		t = hitplane(&light,tmp->obj);
-	if (!t && coef > 0)
+		t = hitsphere(&d->l->r, tmp->obj);
+	else if (tmp->type == PLANE)
+		t = hitplane(&d->l->r, tmp->obj);
+	if (!t)
 	{
-		put_col(&c, RGB(c.r * coef, c.g * coef, c.b * coef));
-		color_pixel(d, RGB(c.r, c.g, c.b), x, y);
+		coef = 0.0;
+		if (tmp->type == SPHERE)
+		{
+			d->h.n = vec_sub(&((t_sphere *)d->o->obj)->p, &d->h.p);
+			coef = vec_dot(&d->l->r.vd, &d->h.n);
+		}
+		else if (tmp->type == PLANE)
+			coef = vec_dot(&d->l->r.vd, &((t_plane *)d->o->obj)->vd);
+		if (coef > 0)
+		{
+			put_col(&c, RGB(COL_MAX(c.r * coef), COL_MAX(c.g * coef), COL_MAX(c.b * coef)));
+			color_pixel(d, RGB(c.r, c.g, c.b), x, y);
+		}
+		else
+			color_pixel(d, CBLACK, x, y);
 	}
 		
 	

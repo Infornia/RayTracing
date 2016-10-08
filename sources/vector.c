@@ -6,13 +6,13 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/03 17:42:02 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 16:21:59 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/08 18:37:03 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_vec3			*vec3(float x, float y, float z)
+t_vec3		*vec3_new(float x, float y, float z)
 {
 	t_vec3	*v;
 	

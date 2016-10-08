@@ -6,9 +6,17 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 16:30:09 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/08 19:45:02 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+typedef struct			s_color
+{
+	float	r;
+	float	g;
+	float	b;
+}						t_color;
 
 typedef struct			s_vec3
 {
@@ -35,25 +43,33 @@ typedef struct			s_cam
 
 }						t_cam;
 
+typedef struct			s_light
+{
+	t_ray				r;
+	int					type;
+	float				range;
+	t_color				color;
+	struct s_light		*next;
+	struct s_light		*prev;
+}						t_light;
+
 typedef struct			s_sphere
 {
 	t_vec3				p;
 	float				r;
 }						t_sphere;
 
+typedef struct			s_hitpoint
+{
+	t_vec3				p;
+	t_vec3				n;
+}						t_hitpoint;
+
 typedef struct			s_plane
 {
 	t_vec3				vd;
 	double				offset;
 }						t_plane;
-
-
-typedef struct			s_color
-{
-	float	r;
-	float	g;
-	float	b;
-}						t_color;
 
 typedef struct			s_object
 {
@@ -77,18 +93,13 @@ typedef struct			s_object
 	struct s_object		*prev;
 }						t_object;
 
-typedef struct			s_intersection
-{
-	float				d;
-	float				n;
-	float				p[3];
-}						t_intersection;
-
 typedef struct			s_data
 {
 	t_cam				c;
 	t_ray				r;
+	t_hitpoint			h;
 	t_object			*o;
+	t_light				*l;
 	void				*mlx;
 	void				*win;
 	void				*img;

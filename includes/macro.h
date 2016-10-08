@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:53:05 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 16:36:00 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/08 19:32:07 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # define Y_HALF 		Y_WIN / 2
 # define X_HALF 		X_WIN / 2
 # define FOV 			tan(20 * M_PI) / 180
+
+/*
+** Objects
+*/
+
+# define OMNI			0
 
 /*
 ** Objects
@@ -41,6 +47,7 @@
 # define CWHITE 		0xFFFFFF
 # define CGRAY 			0x0F0F0F
 # define CBLACK 		0x000000
+# define COL_MAX(a)		(a > 255 ? 255 : a)
 # define RGB(r, g, b)	(256 * 256 * (int)(r) + 256 * (int)(g) + (int)(b))
 # define R_COL(c)		(c) & 0xFF	
 # define G_COL(c)		(c >> 8) & 0xFF	

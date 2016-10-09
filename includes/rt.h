@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 19:47:42 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/09 17:17:56 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ t_data			*init(void);
 */
 
 void			color_pixel(t_data *d, unsigned int col, int x, int y);
-void			put_col(t_color *c, int col);
+t_color			put_col(float r, float g, float b);
+void			add_col(t_color *c, float r, float g, float b);
+void			moy_col(t_color *c);
 
 /*
 *******************DRAW.C
@@ -79,7 +81,7 @@ int				key_hook(int key, t_data *d);
 
 double			solve_2nd_deg(double a, double b, double c);
 t_vec3			get_ray_dir(t_data *d, int x, int y);
-t_object		*find_closest_intersection(t_data *d, t_object *o);
+t_object		*find_closest_intersection(t_object *o, t_ray *r, float *tmin);
 void			compute_color(t_data *d, t_object *o, int x, int y);
 
 
@@ -107,7 +109,7 @@ t_plane			*create_plane(float vx, float vy, float vz, float d);
 /*
 *******************LIGHT.C
 */
-t_light			*create_light(float x, float y, float z, float r);
+t_light			*create_light(t_light *l, float x, float y, float z);
 t_light			*add_light(t_light *l);
 
 #endif

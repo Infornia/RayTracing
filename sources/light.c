@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 19:08:09 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 19:48:05 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/09 15:09:25 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,14 @@ t_light			*add_light(t_light *l)
 	return (tmp);
 }
 
-t_light			*create_light(float x, float y, float z, float range)
+t_light			*create_light(t_light *l, float x, float y, float z)
 {
-	t_light		*l;
 	t_ray		r;
 
-	l = tt_malloc(sizeof(t_light));
+	l = add_light(l);
 	r.o.x = x;
 	r.o.y = y;
 	r.o.z = z;
 	l->r = r;
-	l->range = range;
 	return (l);
 }

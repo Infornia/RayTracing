@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 19:45:02 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/09 15:48:36 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct			s_light
 {
 	t_ray				r;
 	int					type;
-	float				range;
 	t_color				color;
 	struct s_light		*next;
 	struct s_light		*prev;
@@ -108,6 +107,7 @@ typedef struct			s_data
 	int					size;
 	int					endian;
 	double				fov;
+	double				coef;
 	unsigned int		max_size;
 
 	float				tmin;

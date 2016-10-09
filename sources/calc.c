@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/08 19:50:29 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/09 19:01:15 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_vec3			get_ray_dir(t_data *d, int x, int y)
 
 	dir.x = (2.0f * ((x + 0.5f) / X_WIN) - 1.0) * X_WIN / Y_WIN * d->fov;
 	dir.y = (1.0f - 2.0f * ((y + 0.5) / Y_WIN)) * d->fov;
-	dir.z = -1;
+	dir.z = 1;
 	dir = normalize(dir);
 	return (dir);
 }
@@ -46,39 +46,47 @@ double			solve_2nd_deg(double a, double b, double c)
 	return (ret);
 }
 
+void		get_angle_coef(t_data *d, t_object *o, t_light *l, double *coef)
+{
+	if (o->type == SPHERE)
+	{
+		d->h.n = normalize(vec_sub(&((t_sphere *)o->obj)->p, &d->h.p));
+		*coef = 1 / vec_dot(&l->r.vd, &d->h.n);
+	}
+	else if (o->type == PLANE)
+		*coef = vec_dot(&l->r.vd, &((t_plane *)o->obj)->vd);
+}
+
 void		compute_color(t_data *d, t_object *o, int x, int y)
 {
-	double		t;
-	double		coef;
+	t_light		*l;
 	t_color		c;
-	t_object	*tmp;
+	float		t;
+	double		coef;
 	
 	t = 0.0;
-	put_col(&c, RGB(o->color.r, o->color.g, o->color.b));
+	coef = 0.0;
+	l = d->l;
 	d->h.p = vec_scalar(&d->r.vd, d->tmin);
-	d->l->r.vd = normalize(vec_sub(&d->h.p, &d->l->r.o));
-	tmp = o;
-	if (tmp->type == SPHERE)
-		t = hitsphere(&d->l->r, tmp->obj);
-	else if (tmp->type == PLANE)
-		t = hitplane(&d->l->r, tmp->obj);
-	if (!t)
+	c = put_col(o->color.r, o->color.g, o->color.b);
+	while (l)
 	{
-		coef = 0.0;
-		if (tmp->type == SPHERE)
+		l->r.vd = normalize(vec_sub(&d->h.p, &l->r.o));
+		find_closest_intersection(o, &l->r, &t);
+		if (!t)
 		{
-			d->h.n = vec_sub(&((t_sphere *)d->o->obj)->p, &d->h.p);
-			coef = vec_dot(&d->l->r.vd, &d->h.n);
+			get_angle_coef(d, o, l, &coef);
+			if (coef > 0)
+			{
+				add_col(&c, l->color.r * coef, l->color.g * coef, l->color.b * coef);
+				moy_col(&c);
+				color_pixel(d, RGB(c.r, c.g, c.b), x, y);
+			}
+			else
+				color_pixel(d, CBLACK, x, y);
+		
 		}
-		else if (tmp->type == PLANE)
-			coef = vec_dot(&d->l->r.vd, &((t_plane *)d->o->obj)->vd);
-		if (coef > 0)
-		{
-			put_col(&c, RGB(COL_MAX(c.r * coef), COL_MAX(c.g * coef), COL_MAX(c.b * coef)));
-			color_pixel(d, RGB(c.r, c.g, c.b), x, y);
-		}
-		else
-			color_pixel(d, CBLACK, x, y);
+		l = l->next;
 	}
 		
 	
@@ -88,31 +96,29 @@ void		compute_color(t_data *d, t_object *o, int x, int y)
 		// color_pixel(d, col, x, y);
 }
 
-t_object		*find_closest_intersection(t_data *d, t_object *o)
+t_object		*find_closest_intersection(t_object *o, t_ray *r, float *tmin)
 {
-	float		t;
-	int			i;
 	t_object	*ret;
 	t_object	*tmp;
+	float		t;
 	
-	t = 0.0;
 	ret = NULL;
 	tmp = o;
-	d->tmin = 1000.0;
-	i = -1;
+	t = 0.0;
+	*tmin = 1000.0;
 	while (tmp)
 	{
 		if (tmp->type == SPHERE)
-			t = hitsphere(&d->r, tmp->obj);
+			t = hitsphere(r, tmp->obj);
 		if (tmp->type == PLANE)
-			t = hitplane(&d->r, tmp->obj);
-		if (t > EPSILON && t < d->tmin)
+			t = hitplane(r, tmp->obj);
+		if (t > EPSILON && t < *tmin)
 		{
 			ret = tmp;
-			d->tmin = t;
+			*tmin = t;
 		}
 		tmp = tmp->next;
 	}
-	d->tmin = t;
+	*tmin = t;
 	return (ret);
 }

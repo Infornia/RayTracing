@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:21:32 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 13:12:41 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/09 17:27:07 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,34 @@ void			color_pixel(t_data *d, unsigned int col, int x, int y)
 	}
 }
 
-void		put_col(t_color *c, int col)
+void		moy_col(t_color *c)
 {
-	c->r = R_COL(col);
-	c->g = G_COL(col);
-	c->b = B_COL(col);
+	float	x;
+	
+	x = c->r;
+	x = c->g > x ? c->g : x;
+	x = c->b > x ? c->b : x;
+	if (x > 255)
+	{
+		c->r *= 255 / x;
+		c->g *= 255 / x;
+		c->b *= 255 / x;
+	}
+}
+
+void		add_col(t_color *c, float r, float g, float b)
+{
+	c->r += r;
+	c->g += g;
+	c->b += b;
+}
+
+t_color		put_col(float r, float g, float b)
+{
+	t_color	c;
+	
+	c.r = r;
+	c.g = g;
+	c.b = b;
+	return (c);
 }

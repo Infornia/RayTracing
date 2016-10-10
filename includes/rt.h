@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/09 17:17:56 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/10 17:06:43 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void			render(t_data *d);
 *******************VECTOR.C
 */
 t_vec3			normalize(t_vec3 v);
-t_vec3			*vec3_new(float x, float y, float z);
-t_vec3			vec_sub(t_vec3 *a, t_vec3 *b);
-t_vec3			vec_add(t_vec3 *a, t_vec3 *b);
-double			vec_dot(t_vec3 *a, t_vec3 *b);
-t_vec3			vec_scalar(t_vec3 *v, float coef_mult);
+t_vec3			vec3_new(float x, float y, float z);
+t_vec3			vec_sub(t_vec3 a, t_vec3 b);
+t_vec3			vec_add(t_vec3 a, t_vec3 b);
+double			vec_dot(t_vec3 a, t_vec3 b);
+t_vec3			vec_scalar(t_vec3 v, float coef_mult);
 
 /*
 *******************MLX.C

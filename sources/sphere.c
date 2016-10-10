@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:10:59 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/07 17:16:37 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/10 18:26:03 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ double			hitsphere(t_ray *r, t_sphere *s)
 	double	c;
 	double	t;
 
-	a = vec_dot(&r->vd, &r->vd);
+	a = vec_dot(r->vd, r->vd);
 	b = 2 * r->vd.x * (r->o.x - s->p.x);
 	b += 2 * r->vd.y * (r->o.y - s->p.y);
 	b += 2 * r->vd.z * (r->o.z - s->p.z);

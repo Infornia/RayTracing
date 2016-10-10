@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/09 15:48:36 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/10 13:17:09 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ typedef struct			s_ray
 
 typedef struct			s_cam
 {
-	t_vec3				v;
 	t_vec3				p;
+	t_vec3				vd;
+	t_vec3				upleft;
 	float				w;
 	float				h;
 	float				f;
-	t_vec3				upleft;
+	float				fov;
 
 }						t_cam;
 
@@ -106,7 +107,6 @@ typedef struct			s_data
 	int					bpp;
 	int					size;
 	int					endian;
-	double				fov;
 	double				coef;
 	unsigned int		max_size;
 

@@ -15,8 +15,8 @@ int				main(int ac, char **av)
 	{
 		d = (t_data *)init();
 		draw(d);
-		mlx_hook(d->win, 2, 1, key_hook, d);
 		mlx_expose_hook(d->win, expose_hook, d);
+		mlx_hook(d->win, 2, 1, key_hook, d);
 		mlx_loop(d->mlx);
 	}
 	else

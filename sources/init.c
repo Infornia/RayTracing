@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/10 19:15:04 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/11 18:54:39 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void		init_light(t_data *d)
 {
 	t_light		*tmp;
 	
-	tmp = create_light(NULL, 0, 0, 10);
+	tmp = create_light(NULL, 0, 3, 10);
 	d->l = tmp;
 	tmp->type = OMNI;
 	tmp->color = put_col(R_COL(CRED), G_COL(CRED), B_COL(CRED));
 
-	tmp = create_light(tmp, -5, 0, 10);
+	tmp = create_light(tmp, 0, -3, 10);
 	tmp->type = OMNI;
 	tmp->color = put_col(R_COL(CBLUE), G_COL(CBLUE), B_COL(CBLUE));
 }
@@ -33,18 +33,18 @@ static void		init_obj(t_data *d)
 	tmp = add_object(NULL);
 	d->o = tmp;
 	tmp->type = SPHERE;
-	tmp->obj = create_sphere(0, 0, 10, 2);
-	tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
+	tmp->obj = create_sphere(-1, -1, 5, 1);
+	tmp->color = put_col(R_COL(CBLACK), G_COL(CBLACK), B_COL(CBLACK));
 	
 	tmp = add_object(d->o);
-	tmp->obj = create_sphere(1, 0, 10, 2);
+	tmp->obj = create_sphere(1, 1, 5, 1);
 	tmp->type = SPHERE;
-	tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
+	tmp->color = put_col(R_COL(CBLACK), G_COL(CBLACK), B_COL(CBLACK));
 	
-	// tmp = add_object(d->o);
-	// tmp->obj = create_plane(0, 1, 0, 2);
-	// tmp->type = PLANE;
-	// tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
+	tmp = add_object(d->o);
+	tmp->obj = create_plane(0, -1, 0, 2);
+	tmp->type = PLANE;
+	tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
 }
 
 static void				init_cam(t_cam *c)

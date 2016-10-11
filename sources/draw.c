@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/10 19:07:31 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/11 18:49:09 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,29 @@
 
 void			render(t_data *d)
 {
-	t_object	*o;
-	int			i;
-	int			j;
+	t_hitpoint	h;
+	t_color		c;
+	int			x;
+	int			y;
 
-	j = -1;
+	y = -1;
 	d->r.o = d->c.p;
-	while (++j < Y_WIN)
+	while (++y < Y_WIN)
 	{
-		i = -1;
-		while (++i < X_WIN)
+		x = -1;
+		while (++x < X_WIN)
 		{
-			d->r.vd = get_ray_dir(d, i, j);
-			o = find_closest_intersection(d->o, &d->r, &d->tmin);
-			if (o)
-				compute_color(d, o, i, j);
+			d->r.vd = get_ray_dir(x, y);
+			h.o = find_closest_intersection(d->o, &d->r, &d->tmin);
+			if (h.o)
+			{
+				h.p = vec_add(d->r.o, vec_scalar(d->r.vd, d->tmin));
+				c = compute_color(d, &h, x, y);
+				color_pixel(d, RGB(c.r, c.g, c.b), x, y);
+			}
 			else
-				color_pixel(d, CBLACK, i, j);
+				color_pixel(d, CBLACK, x, y);
+			
 		}
 	}
 }

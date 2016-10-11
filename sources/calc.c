@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/11 18:53:48 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/11 19:36:14 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,16 @@ t_color		compute_color(t_data *d, t_hitpoint *h)
 	// printf("%i, %i\n", x, y);
 	while (l)
 	{
-		l->r.vd = normalize(vec_sub(h->p, l->r.o));
+		l->r.vd = normalize(vec_sub(l->r.o, h->p));
 		find_closest_intersection(d->o, &l->r, &t);
-		// if (x == X_HALF && y == Y_HALF)
-			// printf("The t: %f, the light dir:%f,%f,%f\n", t, l->r.vd.x, l->r.vd.y, l->r.vd.z);
-			// printf("The t: %f, the light:%f,%f,%f\n", t, l->r.o.x, l->r.o.y, l->r.o.z);
-		if (t > EPSILON)
+		if (t == 1000.0)
 		{
 			get_angle_coef(h, l, &coef);
 			if (coef > 0)
 			{
-				// c = put_col(255, 0, 0);
 				c = add_col(c, l->color.r * coef, l->color.g * coef, l->color.b * coef);
-				// c = moy_col(c);
 			}
 		}
-		// else
-			// c = put_col(0, 255, 0);
 		l = l->next;
 	}
 	return (moy_col(c));

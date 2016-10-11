@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/11 18:49:09 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/11 19:08:14 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			render(t_data *d)
 			if (h.o)
 			{
 				h.p = vec_add(d->r.o, vec_scalar(d->r.vd, d->tmin));
-				c = compute_color(d, &h, x, y);
+				c = compute_color(d, &h);
 				color_pixel(d, RGB(c.r, c.g, c.b), x, y);
 			}
 			else

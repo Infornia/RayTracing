@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/11 18:54:39 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/11 19:43:40 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,22 @@ static void		init_light(t_data *d)
 {
 	t_light		*tmp;
 	
-	tmp = create_light(NULL, 0, 3, 10);
+	tmp = create_light(NULL, 3, 3, 10);
 	d->l = tmp;
 	tmp->type = OMNI;
 	tmp->color = put_col(R_COL(CRED), G_COL(CRED), B_COL(CRED));
 
-	tmp = create_light(tmp, 0, -3, 10);
+	tmp = create_light(tmp, -3, -3, 10);
 	tmp->type = OMNI;
 	tmp->color = put_col(R_COL(CBLUE), G_COL(CBLUE), B_COL(CBLUE));
+	
+	tmp = create_light(tmp, -5, 3, 0);
+	tmp->type = OMNI;
+	tmp->color = put_col(R_COL(CGREEN), G_COL(CGREEN), B_COL(CGREEN));
+
+	tmp = create_light(tmp, 5, -3, 0);
+	tmp->type = OMNI;
+	tmp->color = put_col(R_COL(CGREEN), G_COL(CGREEN), B_COL(CGREEN));
 }
 
 static void		init_obj(t_data *d)
@@ -34,15 +42,20 @@ static void		init_obj(t_data *d)
 	d->o = tmp;
 	tmp->type = SPHERE;
 	tmp->obj = create_sphere(-1, -1, 5, 1);
-	tmp->color = put_col(R_COL(CBLACK), G_COL(CBLACK), B_COL(CBLACK));
+	tmp->color = put_col(R_COL(CBLUE), G_COL(CBLUE), B_COL(CBLUE));
 	
 	tmp = add_object(d->o);
 	tmp->obj = create_sphere(1, 1, 5, 1);
 	tmp->type = SPHERE;
-	tmp->color = put_col(R_COL(CBLACK), G_COL(CBLACK), B_COL(CBLACK));
+	tmp->color = put_col(R_COL(CRED), G_COL(CRED), B_COL(CRED));
 	
 	tmp = add_object(d->o);
 	tmp->obj = create_plane(0, -1, 0, 2);
+	tmp->type = PLANE;
+	tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
+
+	tmp = add_object(d->o);
+	tmp->obj = create_plane(0, 1, 0, 2);
 	tmp->type = PLANE;
 	tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
 }

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/11 18:15:21 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/13 15:35:59 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct			s_hitpoint
 	t_vec3				p;
 	t_vec3				n;
 	t_vec3				normalize;
+	t_color				c;
 }						t_hitpoint;
 
 typedef struct			s_data

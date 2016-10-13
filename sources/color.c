@@ -6,13 +6,13 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:21:32 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/11 17:18:19 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/13 14:01:31 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void			color_pixel(t_data *d, unsigned int col, int x, int y)
+void		color_pixel(t_data *d, unsigned int col, int x, int y)
 {
 	unsigned int i;
 	i = x * d->bpp + y * d->size;
@@ -40,11 +40,27 @@ t_color		moy_col(t_color c)
 	return (c);
 }
 
-t_color		add_col(t_color c, float r, float g, float b)
+t_color		add_col(t_color c, t_color c2)
 {
-	c.r += r;
-	c.g += g;
-	c.b += b;
+	c.r += c2.r;
+	c.g += c2.g;
+	c.b += c2.b;
+	return (c);
+}
+
+t_color		mult_col(t_color c, t_color c2)
+{
+	c.r *= c2.r;
+	c.g *= c2.g;
+	c.b *= c2.b;
+	return (c);
+}
+
+t_color		scal_col(t_color c, float scal)
+{
+	c.r *= scal;
+	c.g *= scal;
+	c.b *= scal;
 	return (c);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/11 19:36:14 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/13 16:04:11 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,30 @@ t_vec3			get_ray_dir(int x, int y)
 	return (dir);
 }
 
-double			solve_2nd_deg(double a, double b, double c)
-{
-	float	d;
-	double	ret1;
-	double	ret2;
-
-	d = (b * b) - (4 * a * c);
-	// a = 1/4;
-	// d = (b * b) - c;
-	if (d < 0.0)
-		return (0.0);
-	if (d != 0.0)
-	{
-		d = sqrt(d);
-		ret1 = (-b - d) / (2 * a);
-		ret2 = (-b + d) / (2 * a);
-		if (ret2 < ret1)
-			return (ret2);
-		else
-			return (ret1);
-	}
-	else
-		return (-b / (2 * a));
-}
+// double			solve_2nd_deg(double a, double b, double c)
+// {
+// 	float	d;
+// 	double	ret1;
+// 	double	ret2;
+// 
+// 	d = (b * b) - (4 * a * c);
+// 	// a = 1/4;
+// 	// d = (b * b) - c;
+// 	if (d < 0.0)
+// 		return (0.0);
+// 	if (d != 0.0)
+// 	{
+// 		d = sqrt(d);
+// 		ret1 = (-b - d) / (2 * a);
+// 		ret2 = (-b + d) / (2 * a);
+// 		if (ret2 < ret1)
+// 			return (ret2);
+// 		else
+// 			return (ret1);
+// 	}
+// 	else
+// 		return (-b / (2 * a));
+// }
 
 void		get_angle_coef(t_hitpoint *h, t_light *l, double *coef)
 {
@@ -61,31 +61,44 @@ void		get_angle_coef(t_hitpoint *h, t_light *l, double *coef)
 	*coef = vec_dot(l->r.vd, h->normalize);
 }
 
-t_color		compute_color(t_data *d, t_hitpoint *h)
+t_color		diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 {
-	// t_ray		r;
-	t_light		*l;
-	t_color		c;
-	float		t;
 	double		coef;
+	float		t;
 	
 	t = 0.0;
 	coef = 0.0;
+	if (l->type == SPOT)
+		l->r.vd = normalize(vec_sub(l->r.o, h->p));
+	else if (l->type == DIR)
+		l->r.vd = normalize(l->r.vd);
+	find_closest_intersection(d->o, &l->r, &t);
+	if (t == 1000.0)
+	{
+		get_angle_coef(h, l, &coef);
+		if (coef > 0)
+		{
+			c = add_col(c, scal_col(l->color, coef));
+			// printf("%f,%f,%f\n", c.r, c.g, c.b);
+		}
+	}
+	else
+		c = put_col(0, 0, 0);
+	return (c);
+}
+
+t_color		compute_color(t_data *d, t_hitpoint *h, t_color c)
+{
+	t_light		*l;
+	
 	l = d->l;
-	c = put_col(0, 0, 0);
-	// printf("%i, %i\n", x, y);
 	while (l)
 	{
-		l->r.vd = normalize(vec_sub(l->r.o, h->p));
-		find_closest_intersection(d->o, &l->r, &t);
-		if (t == 1000.0)
-		{
-			get_angle_coef(h, l, &coef);
-			if (coef > 0)
-			{
-				c = add_col(c, l->color.r * coef, l->color.g * coef, l->color.b * coef);
-			}
-		}
+		if (l->type == OMNI)
+			c = add_col(c, scal_col(l->color, 0.01));
+		else
+			c = diffuse(d, h, l, c);
+			// c = add_col(c, scal_col(0.9, mult_col(diffuse(d, h, l, c), l->color)));
 		l = l->next;
 	}
 	return (moy_col(c));

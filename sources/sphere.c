@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:10:59 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/10 18:26:03 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/13 16:08:03 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,20 @@ t_sphere		*create_sphere(int x, int y, int z, int r)
 
 double			hitsphere(t_ray *r, t_sphere *s)
 {
-	double	a;
-	double	b;
-	double	c;
-	double	t;
+	t_vec3	e;
+	float	a;
+	float	b;
+	float	t;
 
-	a = vec_dot(r->vd, r->vd);
-	b = 2 * r->vd.x * (r->o.x - s->p.x);
-	b += 2 * r->vd.y * (r->o.y - s->p.y);
-	b += 2 * r->vd.z * (r->o.z - s->p.z);
-	c = (r->o.x - s->p.x) * (r->o.x - s->p.x);
-	c += (r->o.y - s->p.y) * (r->o.y - s->p.y);
-	c += (r->o.z - s->p.z) * (r->o.z - s->p.z);
-	c -= s->r * s->r;
-	t = solve_2nd_deg(a, b ,c);
+	e = vec_sub(s->p, r->o);
+	a = vec_dot(e, r->vd);
+	b = s->r * s->r - vec_dot(e, e) + a * a;
+	t = 1000.0;
+	if (b > 0.0)
+	{
+		t = a - sqrtf(b);
+		if (t <= EPSILON)
+			t = 1000.0;
+	}
 	return (t);
 }

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/11 19:43:40 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/13 16:25:15 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,24 @@ static void		init_light(t_data *d)
 {
 	t_light		*tmp;
 	
-	tmp = create_light(NULL, 3, 3, 10);
+	tmp = create_light(NULL, 3, 0, 10);
 	d->l = tmp;
-	tmp->type = OMNI;
+	tmp->type = DIR;
 	tmp->color = put_col(R_COL(CRED), G_COL(CRED), B_COL(CRED));
+	tmp->r.vd = vec3_new(1, 0, 0);
 
-	tmp = create_light(tmp, -3, -3, 10);
-	tmp->type = OMNI;
-	tmp->color = put_col(R_COL(CBLUE), G_COL(CBLUE), B_COL(CBLUE));
+	// tmp = create_light(tmp, 0, 1, 10);
+	// tmp->type = DIR;
+	// tmp->color = put_col(R_COL(CBLUE), G_COL(CBLUE), B_COL(CBLUE));
+	// tmp->r.vd = vec3_new(-1, 0, 0);
 	
 	tmp = create_light(tmp, -5, 3, 0);
 	tmp->type = OMNI;
-	tmp->color = put_col(R_COL(CGREEN), G_COL(CGREEN), B_COL(CGREEN));
+	tmp->color = put_col(10, 90, 200);
 
-	tmp = create_light(tmp, 5, -3, 0);
-	tmp->type = OMNI;
-	tmp->color = put_col(R_COL(CGREEN), G_COL(CGREEN), B_COL(CGREEN));
+// 	tmp = create_light(tmp, 5, -3, 0);
+// 	tmp->type = SPOT;
+// 	tmp->color = put_col(60, 60, 180);
 }
 
 static void		init_obj(t_data *d)
@@ -41,11 +43,11 @@ static void		init_obj(t_data *d)
 	tmp = add_object(NULL);
 	d->o = tmp;
 	tmp->type = SPHERE;
-	tmp->obj = create_sphere(-1, -1, 5, 1);
+	tmp->obj = create_sphere(-2, 0, 10, 1);
 	tmp->color = put_col(R_COL(CBLUE), G_COL(CBLUE), B_COL(CBLUE));
 	
 	tmp = add_object(d->o);
-	tmp->obj = create_sphere(1, 1, 5, 1);
+	tmp->obj = create_sphere(2, 0, 10, 1);
 	tmp->type = SPHERE;
 	tmp->color = put_col(R_COL(CRED), G_COL(CRED), B_COL(CRED));
 	

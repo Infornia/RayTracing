@@ -6,11 +6,22 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/13 16:14:00 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/16 19:13:04 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+t_vec3			get_ray_dir(int x, int y)
+{
+	t_vec3	dir;
+
+	dir.x = ((-X_HALF + 0.5 + x) / X_WIN) * X_WIN / Y_WIN * FOV;
+	dir.y = ((Y_HALF - 0.5 - y) / Y_WIN) * FOV;
+	dir.z = 1;
+	dir = normalize(dir);
+	return (dir);
+}
 
 void			render(t_data *d)
 {
@@ -19,20 +30,21 @@ void			render(t_data *d)
 	int			x;
 	int			y;
 
-	y = -1;
 	d->r.o = d->c.p;
+	y = -1;
 	while (++y < Y_WIN)
 	{
 		x = -1;
 		while (++x < X_WIN)
 		{
 			c = put_col(0, 0, 0);
-			d->r.vd = get_ray_dir(x, y);
-			h.o = find_closest_intersection(d->o, &d->r, &d->tmin);
+			d->r.dir = get_ray_dir(x, y);
+			h = find_closest_intersection(d->o, &d->r);
 			if (h.o)
 			{
-				h.p = vec_add(d->r.o, vec_scalar(d->r.vd, d->tmin));
-				c = compute_color(d, &h, c);
+				// printf("INTERSECTION %i,%i: t = %f\n", x, y, h.tmin);
+				h.p = vec_add(d->r.o, vec_scalar(d->r.dir, h.tmin));
+				c = compute_color(d, h, c);
 			}
 			color_pixel(d, RGB(c.r, c.g, c.b), x, y);
 		}

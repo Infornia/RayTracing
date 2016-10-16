@@ -6,88 +6,45 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/13 16:04:11 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/16 19:12:21 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_vec3			get_ray_dir(int x, int y)
+double		get_angle_coef(t_hitpoint h, t_light *l)
 {
-	t_vec3	dir;
-
-	dir.x = ((-X_HALF + 0.5 + x) / X_WIN) * X_WIN / Y_WIN * FOV;
-	dir.y = -((Y_HALF + 0.5 - y) / Y_WIN) * FOV;
-	dir.z = 1;
-	// dir.x = (2.0f * ((x + 0.5f) / X_WIN) - 1.0) * d->c.fov;
-	// dir.y = (1.0f - 2.0f * ((y + 0.5) / Y_WIN)) * d->c.fov;
-	// dir.z = 1;
-	dir = normalize(dir);
-	return (dir);
+	if (h.o->type == SPHERE)
+		h.n = normalize(vec_sub(h.p, ((t_sphere *)h.o->obj)->p));
+	else if (h.o->type == PLANE)
+		h.n = ((t_plane *)h.o->obj)->n;
+	// h.normalize = normalize(h.n);
+	return (vec_dot(l->r.dir, h.n));
 }
 
-// double			solve_2nd_deg(double a, double b, double c)
-// {
-// 	float	d;
-// 	double	ret1;
-// 	double	ret2;
-// 
-// 	d = (b * b) - (4 * a * c);
-// 	// a = 1/4;
-// 	// d = (b * b) - c;
-// 	if (d < 0.0)
-// 		return (0.0);
-// 	if (d != 0.0)
-// 	{
-// 		d = sqrt(d);
-// 		ret1 = (-b - d) / (2 * a);
-// 		ret2 = (-b + d) / (2 * a);
-// 		if (ret2 < ret1)
-// 			return (ret2);
-// 		else
-// 			return (ret1);
-// 	}
-// 	else
-// 		return (-b / (2 * a));
-// }
-
-void		get_angle_coef(t_hitpoint *h, t_light *l, double *coef)
-{
-	if (h->o->type == SPHERE)
-		h->n = vec_sub(h->p, ((t_sphere *)h->o->obj)->p);
-	if (h->o->type == PLANE)
-		h->n = vec_sub(h->p, ((t_plane *)h->o->obj)->vd);
-	h->normalize = normalize(h->n);
-	*coef = vec_dot(l->r.vd, h->normalize);
-}
-
-t_color		diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
+t_color		diffuse(t_data *d, t_hitpoint h, t_light *l, t_color c)
 {
 	double		coef;
 	float		t;
 	
 	t = 0.0;
 	coef = 0.0;
+	// l->r.dir = normalize(vec_sub(l->r.o, h.p));
 	if (l->type == SPOT)
-		l->r.vd = normalize(vec_sub(l->r.o, h->p));
+		l->r.dir = normalize(vec_sub(l->r.o, h.p));
 	else if (l->type == DIR)
-		l->r.vd = normalize(l->r.vd);
-	find_closest_intersection(d->o, &l->r, &t);
-	if (t == 1000.0)
+		l->r.dir = normalize(l->r.dir);
+	if (!find_intersection(d->o, &l->r))
 	{
-		get_angle_coef(h, l, &coef);
-		if (coef > 0)
-		{
-			c = add_col(c, scal_col(l->color, coef));
-			// printf("%f,%f,%f\n", c.r, c.g, c.b);
-		}
+		coef = get_angle_coef(h, l);
+		if (coef < 0)
+			coef = 0;
+		c = add_col(c, scal_col(l->color, coef));
 	}
-	else
-		c = put_col(0, 0, 0);
 	return (c);
 }
 
-t_color		compute_color(t_data *d, t_hitpoint *h, t_color c)
+t_color		compute_color(t_data *d, t_hitpoint h, t_color c)
 {
 	t_light		*l;
 	
@@ -95,37 +52,11 @@ t_color		compute_color(t_data *d, t_hitpoint *h, t_color c)
 	while (l)
 	{
 		if (l->type == OMNI)
-			c = add_col(c, scal_col(l->color, 0.01));
-		else
+			c = add_col(c, scal_col(l->color, 0.1));
+		else if (l->type == DIR || l->type == SPOT)
 			c = diffuse(d, h, l, c);
 			// c = add_col(c, scal_col(0.9, mult_col(diffuse(d, h, l, c), l->color)));
 		l = l->next;
 	}
-	return (moy_col(c));
-}
-
-t_object		*find_closest_intersection(t_object *o, t_ray *r, float *tmin)
-{
-	t_object	*ret;
-	t_object	*tmp;
-	float		t;
-	
-	ret = NULL;
-	tmp = o;
-	t = 0.0;
-	*tmin = 1000.0;
-	while (tmp)
-	{
-		if (tmp->type == SPHERE)
-			t = hitsphere(r, tmp->obj);
-		else if (tmp->type == PLANE)
-			t = hitplane(r, tmp->obj);
-		if (t > EPSILON && t < *tmin)
-		{
-			*tmin = t;
-			ret = tmp;
-		}
-		tmp = tmp->next;
-	}
-	return (ret);
+	return (lim_col(c));
 }

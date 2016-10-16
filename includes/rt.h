@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/13 12:44:00 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/16 19:12:36 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_color			put_col(float r, float g, float b);
 t_color			add_col(t_color c, t_color c2);
 t_color			moy_col(t_color c);
 t_color			scal_col(t_color c, float scal);
+t_color			lim_col(t_color c);
 t_color			mult_col(t_color c, t_color c2);
 
 /*
@@ -83,9 +84,14 @@ int				key_hook(int key, t_data *d);
 
 double			solve_2nd_deg(double a, double b, double c);
 t_vec3			get_ray_dir(int x, int y);
-t_object		*find_closest_intersection(t_object *o, t_ray *r, float *tmin);
-t_color			compute_color(t_data *d, t_hitpoint *h, t_color c);
+t_color			compute_color(t_data *d, t_hitpoint h, t_color c);
 
+/*
+*******************CALCULATE.C
+*/
+
+t_hitpoint		find_closest_intersection(t_object *o, t_ray *r);
+int				find_intersection(t_object *o, t_ray *r);
 
 /*
 *******************OBJECT.C
@@ -98,14 +104,14 @@ t_object		*add_object(t_object *o);
 */
 
 t_sphere		*create_sphere(int x, int y, int z, int r);
-double			hitsphere(t_ray *r, t_sphere *s);
+float			hitsphere(t_ray *r, t_sphere *s);
 
 
 /*
 *******************PLANE.C
 */
 
-double			hitplane(t_ray *r, t_plane *p);
+float			hitplane(t_ray *r, t_plane *p);
 t_plane			*create_plane(float vx, float vy, float vz, float d);
 
 /*

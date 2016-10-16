@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:53:05 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/13 12:31:17 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/16 14:42:14 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define SPHERE			0
 # define PLANE			1
 # define EPSILON		0.001
+# define MAX_DIST		100.0
+
 
 /*
 **Colors
@@ -51,9 +53,9 @@
 # define CBLACK 		0x000000
 # define COL_MAX(a)		(a > 255 ? 255 : a)
 # define RGB(r, g, b)	(256 * 256 * (int)(r) + 256 * (int)(g) + (int)(b))
-# define R_COL(c)		(c) & 0xFF	
+# define R_COL(c)		(c >> 16) & 0xFF	
 # define G_COL(c)		(c >> 8) & 0xFF	
-# define B_COL(c)		(c >> 16) & 0xFF	
+# define B_COL(c)		(c >> 0) & 0xFF	
 
 
 /*

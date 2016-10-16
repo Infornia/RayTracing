@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:21:32 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/13 14:01:31 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/16 17:33:31 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ void		color_pixel(t_data *d, unsigned int col, int x, int y)
 		d->dimg[i + 1] = (char)(col >> 8);
 		d->dimg[i + 2] = (char)(col >> 16);
 	}
+}
+
+t_color		lim_col(t_color c)
+{
+	c.r = c.r > 255 ? 255 : c.r;
+	c.g = c.g > 255 ? 255 : c.g;
+	c.b = c.b > 255 ? 255 : c.b;
+	return (c);
 }
 
 t_color		moy_col(t_color c)

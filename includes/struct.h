@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/13 15:35:59 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/16 13:54:19 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct			s_vec3
 typedef struct			s_ray
 {
 	t_vec3				o;
-	t_vec3				vd;
+	t_vec3				dir;
 	float				t;
 }						t_ray;
 
@@ -62,8 +62,8 @@ typedef struct			s_sphere
 
 typedef struct			s_plane
 {
-	t_vec3				vd;
-	double				offset;
+	t_vec3				n;
+	double				d;
 }						t_plane;
 
 typedef struct			s_object
@@ -95,6 +95,7 @@ typedef struct			s_hitpoint
 	t_vec3				n;
 	t_vec3				normalize;
 	t_color				c;
+	float				tmin;
 }						t_hitpoint;
 
 typedef struct			s_data
@@ -114,7 +115,6 @@ typedef struct			s_data
 	double				coef;
 	unsigned int		max_size;
 
-	float				tmin;
 	size_t				lastime;
 	size_t				time;
 }						t_data;

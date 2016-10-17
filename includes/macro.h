@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:53:05 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 14:43:07 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 15:39:50 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define OMNI			0
 # define SPOT			1
 # define DIR			2
+# define SPOTLIGHT		3
 
 /*
 ** Objects

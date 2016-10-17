@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 15:05:19 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 19:01:25 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void			render(t_data *d)
 			if (h.o)
 			{
 				// printf("INTERSECTION %i,%i: t = %f\n", x, y, h.tmin);
+				// h.p = vec_sub(vec_add(d->r.o, vec_scalar(d->r.dir, h.tmin)), ((t_sphere *)h.o->obj)->p);
 				h.p = vec_add(d->r.o, vec_scalar(d->r.dir, h.tmin));
 				c = compute_color(d, &h, c);
 			}
@@ -61,7 +62,7 @@ void			draw(t_data *d)
 	d->time = clock();
 	dframe = d->time - d->lastime;
 	printf("last %zu, now %zu, Delta %f\n", d->time, d->lastime, dframe);
+	mlx_put_image_to_window(d->mlx, d->win, d->img, 0, 0);
 	// printf("x %f, y %f, z %f\n", d->r.o.x, d->r.o.y, d->r.o.z);
 	// mlx_do_sync(d->mlx);
-	mlx_put_image_to_window(d->mlx, d->win, d->img, 0, 0);
 }

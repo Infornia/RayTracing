@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 15:21:54 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 17:10:46 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static double	get_angle_coef(t_hitpoint *h, t_light *l)
 {
 	if (h->o->type == SPHERE)
-		h->n = normalize(vec_sub(h->p, ((t_sphere *)h->o->obj)->p));
+		h->n = vec_sub(h->p, ((t_sphere *)h->o->obj)->p);
 	else if (h->o->type == PLANE)
 		h->n = ((t_plane *)h->o->obj)->n;
 	h->normalize = normalize(h->n);
@@ -30,14 +30,17 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 	
 	t = 0.0;
 	angle = 0.0;
-	coef = get_angle_coef(h, l);
-	l->r.dir = normalize(vec_sub(l->r.o, h->p));
 	if (l->type == DIR)
-		angle = vec_dot(l->r.dir, l->dir);
+		l->r.dir = l->spotlight;
+	else
+		l->r.dir = normalize(vec_sub(l->r.o, h->p));
+	coef = get_angle_coef(h, l);
+	if (l->type == SPOTLIGHT)
+		angle = vec_dot(l->r.dir, l->spotlight);
 	if (coef > 0 && angle <= 0)
 	{
-		if (!find_intersection(d->o, &l->r))
-		c = add_col(c, scal_col(l->color, coef));
+		if (!find_intersection(d->o, l))
+			c = add_col(c, scal_col(l->color, coef));
 	}
 	else
 		coef = 0.0;

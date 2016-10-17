@@ -6,27 +6,29 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 12:00:52 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/16 16:40:13 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 19:03:38 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "rt.h"
 
-int				find_intersection(t_object *o, t_ray *r)
+int				find_intersection(t_object *o, t_light *l)
 {
 	t_object	*tmp;
 	float		t;
+	float		limit;
 	
 	tmp = o;
-	t = MAX_DIST;
+	limit = l->radius ? l->radius : MAX_DIST;
+	t = limit;
 	while (tmp)
 	{
 		if (tmp->type == SPHERE)
-			t = hitsphere(r, tmp->obj);
+			t = hitsphere(&l->r, tmp->obj);
 		else if (tmp->type == PLANE)
-			t = hitplane(r, tmp->obj);
-		if (t >= EPSILON && t < MAX_DIST)
+			t = hitplane(&l->r, tmp->obj);
+		if (t >= EPSILON && t < limit)
 			return (1);
 		tmp = tmp->next;
 	}

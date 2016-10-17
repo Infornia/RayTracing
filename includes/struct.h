@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 15:21:12 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 18:50:35 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct			s_ray
 {
 	t_vec3				o;
 	t_vec3				dir;
-	float				t;
 }						t_ray;
 
 typedef struct			s_cam
@@ -47,8 +46,9 @@ typedef struct			s_cam
 typedef struct			s_light
 {
 	t_ray				r;
-	t_vec3				dir;
+	t_vec3				spotlight;
 	int					type;
+	int					radius;
 	t_color				color;
 	struct s_light		*next;
 	struct s_light		*prev;

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/16 19:13:04 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 15:05:19 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void			render(t_data *d)
 	int			y;
 
 	d->r.o = d->c.p;
-	y = -1;
-	while (++y < Y_WIN)
+	y = Y_WIN + 1;
+	while (--y)
 	{
-		x = -1;
-		while (++x < X_WIN)
+		x = X_WIN + 1;
+		while (--x)
 		{
 			c = put_col(0, 0, 0);
 			d->r.dir = get_ray_dir(x, y);
@@ -44,7 +44,7 @@ void			render(t_data *d)
 			{
 				// printf("INTERSECTION %i,%i: t = %f\n", x, y, h.tmin);
 				h.p = vec_add(d->r.o, vec_scalar(d->r.dir, h.tmin));
-				c = compute_color(d, h, c);
+				c = compute_color(d, &h, c);
 			}
 			color_pixel(d, RGB(c.r, c.g, c.b), x, y);
 		}

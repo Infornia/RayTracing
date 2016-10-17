@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/16 18:59:19 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 15:24:02 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ static void		init_light(t_data *d)
 {
 	t_light		*tmp;
 	
-	tmp = create_light(NULL, 0, 100, 0);
+	tmp = create_light(NULL, 0, 10, 0);
 	d->l = tmp;
 	tmp->type = DIR;
 	tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
-	tmp->r.dir = normalize(vec3_new(1, 1, 0));
+	tmp->dir = normalize(vec3_new(0, -1, 0));
 
 	// tmp = create_light(tmp, 10, 10, 0);
 	// tmp->type = SPOT;

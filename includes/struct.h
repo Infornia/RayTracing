@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/16 13:54:19 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/17 15:21:12 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct			s_cam
 typedef struct			s_light
 {
 	t_ray				r;
+	t_vec3				dir;
 	int					type;
 	t_color				color;
 	struct s_light		*next;

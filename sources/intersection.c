@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 12:00:52 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 19:03:38 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/19 19:13:32 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int				find_intersection(t_object *o, t_light *l)
 			t = hitsphere(&l->r, tmp->obj);
 		else if (tmp->type == PLANE)
 			t = hitplane(&l->r, tmp->obj);
-		if (t >= EPSILON && t < limit)
+		// printf("THE T%f\n",t);
+		if (t > EPSILON && t < limit)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -55,6 +56,12 @@ t_hitpoint	find_closest_intersection(t_object *o, t_ray *r)
 		{
 			h.tmin = t;
 			h.o = tmp;
+			h.p = vec_add(r->o, vec_scalar(r->dir, t));
+			if (tmp->type == SPHERE)
+				h.n = vec_sub(h.p, ((t_sphere *)tmp->obj)->p);
+			else if (tmp->type == PLANE)
+				h.n = ((t_plane *)tmp->obj)->n;
+			h.normalize = normalize(h.n);
 		}
 		tmp = tmp->next;
 	}

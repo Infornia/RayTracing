@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 18:38:18 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/19 18:44:43 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static void		init_light(t_data *d)
 	tmp->color = put_col(255, 255, 255);
 	tmp->radius = 20;
 
-	tmp = create_light(tmp, 5, 0, 10);
+	tmp = create_light(tmp, 0, 0, 0);
 	tmp->type = SPOTLIGHT;
 	tmp->color = put_col(0, 255, 0);
-	tmp->spotlight = normalize(vec3_new(-1, 0, 0));
+	tmp->spotlight = normalize(vec3_new(0, 0, 1));
 	tmp->radius = 20;
 }
 
@@ -55,11 +55,11 @@ static void		init_obj(t_data *d)
 	tmp->obj = create_sphere(2, 0, 10, 1);
 	tmp->type = SPHERE;
 	tmp->color = put_col(R_COL(CRED), G_COL(CRED), B_COL(CRED));
-	// 
-	// tmp = add_object(d->o);
-	// tmp->obj = create_plane(1, 0, 0, 2);
-	// tmp->type = PLANE;
-	// tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
+	
+	tmp = add_object(d->o);
+	tmp->obj = create_plane(1, 0, 0, 0);
+	tmp->type = PLANE;
+	tmp->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
 	// 
 	// tmp = add_object(d->o);
 	// tmp->obj = create_plane(-1, 0, 0, 2);

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 18:21:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/16 18:58:08 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/19 18:10:30 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ float		hitplane(t_ray *r, t_plane *p)
 	num = p->d - vec_dot(p->n, r->o);
 	denum = vec_dot(p->n, r->dir);
 	t = num / denum; 
-	if (t <= EPSILON)
+	if (t < EPSILON)
 		t = MAX_DIST;
 	return (t);
 }

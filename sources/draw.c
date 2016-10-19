@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 19:01:25 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/19 18:46:10 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,17 @@ void			render(t_data *d)
 	int			y;
 
 	d->r.o = d->c.p;
-	y = Y_WIN + 1;
-	while (--y)
+	y = Y_WIN;
+	while (y--)
 	{
-		x = X_WIN + 1;
-		while (--x)
+		x = X_WIN;
+		while (x--)
 		{
 			c = put_col(0, 0, 0);
 			d->r.dir = get_ray_dir(x, y);
 			h = find_closest_intersection(d->o, &d->r);
 			if (h.o)
-			{
-				// printf("INTERSECTION %i,%i: t = %f\n", x, y, h.tmin);
-				// h.p = vec_sub(vec_add(d->r.o, vec_scalar(d->r.dir, h.tmin)), ((t_sphere *)h.o->obj)->p);
-				h.p = vec_add(d->r.o, vec_scalar(d->r.dir, h.tmin));
 				c = compute_color(d, &h, c);
-			}
 			color_pixel(d, RGB(c.r, c.g, c.b), x, y);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 18:50:35 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/20 20:37:09 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct			s_sphere
 {
 	t_vec3				p;
 	float				r;
+	t_color				color;
 }						t_sphere;
 
 
@@ -65,7 +66,16 @@ typedef struct			s_plane
 {
 	t_vec3				n;
 	double				d;
+	t_color				color;
 }						t_plane;
+
+typedef struct			s_material
+{
+	t_vec3		color;
+	float		diffuse;
+	float		specular;
+}						t_material;
+
 
 typedef struct			s_object
 {
@@ -91,12 +101,11 @@ typedef struct			s_object
 
 typedef struct			s_hitpoint
 {
-	t_object			*o;
+	float				t;
 	t_vec3				p;
 	t_vec3				n;
-	t_vec3				normalize;
 	t_color				c;
-	float				tmin;
+	t_material			m;
 }						t_hitpoint;
 
 typedef struct			s_data

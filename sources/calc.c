@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/19 19:11:31 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/20 20:57:26 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 		l->r.dir = l->spotlight;
 	else
 		l->r.dir = normalize(vec_sub(l->r.o, h->p));
-	coef = vec_dot(l->r.dir, h->normalize);
+	coef = vec_dot(l->r.dir, h->n);
 	if (l->type == SPOTLIGHT)
 		angle = vec_dot(l->r.dir, l->spotlight);
 	if (coef > 0 && angle <= 0)

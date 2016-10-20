@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:10:59 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/19 19:50:51 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/20 20:36:40 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,29 @@ t_sphere		*create_sphere(int x, int y, int z, int r)
 	return (s);
 }
 
-float			hitsphere(t_ray *r, t_sphere *s)
+t_hitpoint		hitsphere(t_ray *r, t_sphere *s)
 {
-	t_vec3	e;
-	float	a;
-	float	b;
-	float	t;
+	t_vec3		e;
+	t_hitpoint	h;
+	float		l;
+	float		det;
 
 	e = vec_sub(s->p, r->o);
-	a = vec_dot(e, r->dir);
-	b = s->r * s->r - vec_dot(e, e) + a * a;
-	t = MAX_DIST;
-	if (b >= 0.0)
-		t =  MIN(a - sqrtf(b), a + sqrtf(b));
-	return (t);
+	l = vec_dot(r->dir, e);
+	det = l * l - vec_dot(e, e) + s->r * s->r;
+	if (det < 0.0)
+		return (miss());
+	h.t = l - sqrt(det);
+	if (h.t < 0.0)
+		h.t = l + sqrt(det);
+	if (h.t < 0.0)
+		return (miss());
+	// if (b >= 0.0)
+		// h.t =  MIN(a - sqrtf(b), a + sqrtf(b));
+	e = vec_sub(r->o, s->p);
+	h.p = vec_add(r->o, vec_scalar(r->dir, h.t));
+	h.n = vec_scalar(vec_sub(h.p, s->p), 1 / s->r);
+	h.c = s->color;
+	// h.m = p->m;
+	return (h);
 }

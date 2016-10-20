@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 18:21:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/19 18:10:30 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/20 20:29:25 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,21 @@ t_plane		*create_plane(float x, float y, float z, float d)
 	return (plane);
 }
 
-float		hitplane(t_ray *r, t_plane *p)
+t_hitpoint		hitplane(t_ray *r, t_plane *p)
 {
-	float	t;
-	float	num;
-	float	denum;
+	float		t;
+	float		num;
+	float		denum;
+	t_hitpoint	h;
 	
 	num = p->d - vec_dot(p->n, r->o);
 	denum = vec_dot(p->n, r->dir);
-	t = num / denum; 
+	t = num / denum;
 	if (t < EPSILON)
-		t = MAX_DIST;
-	return (t);
+		return(miss());
+	h.t = t;
+	h.n = normalize(p->n);
+	h.c = p->color;
+	// h.m = p->m;
+	return (h);
 }

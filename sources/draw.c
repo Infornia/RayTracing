@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/19 18:46:10 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/20 20:56:47 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void			render(t_data *d)
 			c = put_col(0, 0, 0);
 			d->r.dir = get_ray_dir(x, y);
 			h = find_closest_intersection(d->o, &d->r);
-			if (h.o)
+			if (h.t < MAX_DIST)
 				c = compute_color(d, &h, c);
 			color_pixel(d, RGB(c.r, c.g, c.b), x, y);
+				// color_pixel(d, CWHITE, x, y);
 		}
 	}
 }

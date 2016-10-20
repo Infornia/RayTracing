@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/17 17:11:12 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/20 20:24:17 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int				key_hook(int key, t_data *d);
 *******************INTERSECTION.C
 */
 
+t_hitpoint		miss(void);
 t_hitpoint		find_closest_intersection(t_object *o, t_ray *r);
 int				find_intersection(t_object *o, t_light *l);
 
@@ -99,7 +100,7 @@ t_object		*add_object(t_object *o);
 *******************PLANE.C
 */
 
-float			hitplane(t_ray *r, t_plane *p);
+t_hitpoint		hitplane(t_ray *r, t_plane *p);
 t_plane			*create_plane(float vx, float vy, float vz, float d);
 
 /*
@@ -107,7 +108,7 @@ t_plane			*create_plane(float vx, float vy, float vz, float d);
 */
 
 t_sphere		*create_sphere(int x, int y, int z, int r);
-float			hitsphere(t_ray *r, t_sphere *s);
+t_hitpoint		hitsphere(t_ray *r, t_sphere *s);
 
 
 /*

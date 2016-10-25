@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:21:32 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 16:31:29 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 18:28:41 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ t_color		scal_col(t_color c, float scal)
 	return (c);
 }
 
-t_color		put_col(float r, float g, float b)
+t_color		put_col(unsigned int color)
 {
 	t_color	c;
 	
-	c.r = r;
-	c.g = g;
-	c.b = b;
+	c.r = R_COL(color);
+	c.g = G_COL(color);
+	c.b = B_COL(color);
 	return (c);
 }

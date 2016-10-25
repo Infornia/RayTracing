@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:00:39 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 18:25:41 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_color			compute_color(t_data *d, t_hitpoint *h, t_color c);
 */
 
 void			color_pixel(t_data *d, unsigned int col, int x, int y);
-t_color			put_col(float r, float g, float b);
+t_color			put_col(unsigned int c);
 t_color			add_col(t_color c, t_color c2);
 t_color			moy_col(t_color c);
 t_color			scal_col(t_color c, float scal);
@@ -80,8 +80,8 @@ int				find_intersection(t_object *o, t_light *l);
 /*
 *******************LIGHT.C
 */
-t_light			*create_light(t_light *l, float x, float y, float z);
-t_light			*add_light(t_light *l);
+t_light			*add_light(t_light *l, float x, float y, float z);
+t_light			*create_light(t_light *l);
 
 /*
 *******************MLX.C

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 17:40:37 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 18:27:38 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ typedef t_hitpoint		(*t_inter)(t_ray *r, t_object *o);
 
 typedef struct			s_color
 {
-	float	r;
-	float	g;
-	float	b;
+	unsigned int		r;
+	unsigned int		g;
+	unsigned int		b;
 }						t_color;
 
 typedef struct			s_vec3

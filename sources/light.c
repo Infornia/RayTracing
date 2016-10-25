@@ -6,13 +6,13 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 19:08:09 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/24 19:52:48 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 18:15:42 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_light			*add_light(t_light *l)
+t_light			*create_light(t_light *l)
 {
 	t_light	*tmp;
 	
@@ -35,11 +35,11 @@ t_light			*add_light(t_light *l)
 	return (tmp);
 }
 
-t_light			*create_light(t_light *l, float x, float y, float z)
+t_light			*add_light(t_light *l, float x, float y, float z)
 {
 	t_ray		r;
 
-	l = add_light(l);
+	l = create_light(l);
 	r.o.x = x;
 	r.o.y = y;
 	r.o.z = z;

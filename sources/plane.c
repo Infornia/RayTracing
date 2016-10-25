@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 18:21:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/20 20:29:25 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/24 19:19:27 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_hitpoint		hitplane(t_ray *r, t_plane *p)
 	if (t < EPSILON)
 		return(miss());
 	h.t = t;
+	h.p = vec_add(r->o, vec_scalar(r->dir, h.t));
 	h.n = normalize(p->n);
 	h.c = p->color;
 	// h.m = p->m;

@@ -6,10 +6,16 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/20 20:37:09 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 17:40:37 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+typedef struct			s_data		t_data; 
+typedef struct			s_ray		t_ray;
+typedef struct			s_hitpoint	t_hitpoint;
+typedef struct			s_object	t_object;
+
+typedef t_hitpoint		(*t_inter)(t_ray *r, t_object *o);
 
 typedef struct			s_color
 {
@@ -25,11 +31,11 @@ typedef struct			s_vec3
 	float				z;
 }						t_vec3;
 
-typedef struct			s_ray
+struct					s_ray
 {
 	t_vec3				o;
 	t_vec3				dir;
-}						t_ray;
+};
 
 typedef struct			s_cam
 {
@@ -49,6 +55,7 @@ typedef struct			s_light
 	t_vec3				spotlight;
 	int					type;
 	int					radius;
+	float				angle;
 	t_color				color;
 	struct s_light		*next;
 	struct s_light		*prev;
@@ -77,9 +84,11 @@ typedef struct			s_material
 }						t_material;
 
 
-typedef struct			s_object
+struct					s_object
 {
 	void				*obj;
+	t_inter				intersection;
+	void				*normalize;
 	int					type;
 	
 	t_color				color;
@@ -97,22 +106,24 @@ typedef struct			s_object
 	int					permanent;
 	struct s_object		*next;
 	struct s_object		*prev;
-}						t_object;
+};
 
-typedef struct			s_hitpoint
+struct					s_hitpoint
 {
 	float				t;
 	t_vec3				p;
 	t_vec3				n;
 	t_color				c;
 	t_material			m;
-}						t_hitpoint;
+};
 
-typedef struct			s_data
+
+struct					s_data
 {
-	t_cam				c;
+	t_cam				cam;
 	t_ray				r;
 	t_hitpoint			h;
+	t_color				c;
 	t_object			*o;
 	t_light				*l;
 	void				*mlx;
@@ -127,4 +138,28 @@ typedef struct			s_data
 
 	size_t				lastime;
 	size_t				time;
-}						t_data;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

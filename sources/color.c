@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:21:32 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/16 17:33:31 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 16:31:29 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void		color_pixel(t_data *d, unsigned int col, int x, int y)
 {
 	unsigned int i;
+	
 	i = x * d->bpp + y * d->size;
 	if (i < d->max_size)
 	{

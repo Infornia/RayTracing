@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/20 20:56:47 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 15:36:25 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_vec3			get_ray_dir(int x, int y)
 {
 	t_vec3	dir;
 
-	dir.x = ((-X_HALF + 0.5 + x) / X_WIN) * X_WIN / Y_WIN * FOV;
-	dir.y = ((Y_HALF - 0.5 - y) / Y_WIN) * FOV;
+	dir.x = ((2 * (x + 0.5) / X_WIN) - 1) * RATIO * FOV;
+	dir.y = (1 - (2 * ((0.5 + y) / Y_WIN))) * FOV;
 	dir.z = 1;
 	dir = normalize(dir);
 	return (dir);
@@ -25,24 +25,22 @@ t_vec3			get_ray_dir(int x, int y)
 
 void			render(t_data *d)
 {
-	t_hitpoint	h;
-	t_color		c;
 	int			x;
 	int			y;
 
-	d->r.o = d->c.p;
+	d->r.o = d->cam.p;
 	y = Y_WIN;
 	while (y--)
 	{
 		x = X_WIN;
 		while (x--)
 		{
-			c = put_col(0, 0, 0);
 			d->r.dir = get_ray_dir(x, y);
-			h = find_closest_intersection(d->o, &d->r);
-			if (h.t < MAX_DIST)
-				c = compute_color(d, &h, c);
-			color_pixel(d, RGB(c.r, c.g, c.b), x, y);
+			d->c = put_col(0, 0, 0);
+			d->h = find_closest_intersection(d->o, &d->r);
+			if (d->h.t < MAX_DIST)
+				d->c = compute_color(d, &d->h, d->c);
+			color_pixel(d, RGB(d->c.r, d->c.g, d->c.b), x, y);
 				// color_pixel(d, CWHITE, x, y);
 		}
 	}

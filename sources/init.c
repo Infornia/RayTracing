@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 17:42:39 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 18:00:19 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,12 @@ static void		init_obj(t_data *d)
 	t_object	*o;
 	
 	d->o = NULL;
-	o = add_object(d->o);
-	d->o = o;
-	o->type = SPHERE;
-	o->obj = create_sphere(-1, 0, 10, 1);
+	o = add_object(d->o, SPHERE, -1, 0, 10, 1);
 	o->color = put_col(R_COL(CBLUE), G_COL(CBLUE), B_COL(CBLUE));
-	o->intersection = (t_inter)hitsphere;
+	d->o = o;	
 	
-	o = add_object(d->o);
-	o->obj = create_sphere(1, 0, 10, 1);
-	o->type = SPHERE;
+	o = add_object(d->o, SPHERE, 1, 0, 10, 1);
 	o->color = put_col(R_COL(CRED), G_COL(CRED), B_COL(CRED));
-	o->intersection = (t_inter)hitsphere;
 	
 	// o = add_object(d->o);
 	// o->obj = create_plane(1, 0, 0, 0);
@@ -65,11 +59,8 @@ static void		init_obj(t_data *d)
 	// o->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
 	// o->intersection = &hitplane;
 	
-	o = add_object(d->o);
-	o->obj = create_plane(0, 1, 0, 0);
-	o->type = PLANE;
+	o = add_object(d->o, PLANE, 0, 1, 0, 0);
 	o->color = put_col(R_COL(CWHITE), G_COL(CWHITE), B_COL(CWHITE));
-	o->intersection = (t_inter)hitplane;
 }
 
 static void				init_cam(t_cam *c)

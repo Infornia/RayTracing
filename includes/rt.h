@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 17:13:04 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/25 18:00:39 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void			destroy_mlx(t_data *d);
 *******************OBJECT.C
 */
 
-t_object		*add_object(t_object *o);
+t_object		*add_object(t_object *o, int type, int x, int y, int z, int r);
+t_object		*create_object(t_object *o);
 
 /*
 *******************PLANE.C

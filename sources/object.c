@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 16:01:29 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:09:20 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 14:35:54 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@ t_object		*create_object(t_object *o)
 {
 	t_object	*tmp;
 	
-	printf("Entering\n");
 	tmp = o;
 	if (!tmp)
 	{
-		printf("NEW OBJ\n");
 		tmp = tt_malloc(sizeof(t_object));
 		tmp->next = NULL;
 		tmp->prev = NULL;
 	}
 	else
 	{
-		printf("NEW OBJ2\n");
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = tt_malloc(sizeof(t_object));

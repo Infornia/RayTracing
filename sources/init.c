@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:58:42 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 17:57:49 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,26 @@ static void		init_light(t_data *d)
 	
 	l = add_light(NULL, 0, 0, 0);
 	d->l = l;
-	l->type = DIR;
-	l->color = put_col(CWHITE);
-	l->r.dir = normalize(vec3_new(1, 0, 0));
-	l->radius = 20;
-
-	l = add_light(l, -5, 0, 10);
-	l->type = SPOT;
-	l->color = put_col(CBLUE);
-	l->r.dir = vec3_new(0, 0, 0);
-	l->radius = 20;
-	
-	l = add_light(l, 0, 0, 0);
 	l->type = OMNI;
 	l->color = put_col(CWHITE);
 	l->radius = 20;
-
-	l = add_light(l, 2, 0, 10);
-	l->type = SPOTLIGHT;
-	l->color = put_col(CGREEN);
-	l->spotlight = vec3_new(-1, 1, 0);
+	
+	l = add_light(l, 3, 1, 10);
+	l->type = SPOT;
+	l->color = put_col(CRED);
 	l->radius = 20;
+	
+	l = add_light(l, 0, 0, 0);
+	l->type = DIR;
+	l->color = put_col(CBLUE);
+	l->r.dir = normalize(vec3_new(1, 0, 0));
+	l->radius = 20;
+
+	// l = add_light(l, 0, 10, 0);
+	// l->type = SPOTLIGHT;
+	// l->color = put_col(CGREEN);
+	// l->r.dir = normalize(vec3_new(0, 0, 1));
+	// l->radius = 20;
 }
 
 static void		init_obj(t_data *d)
@@ -53,11 +52,11 @@ static void		init_obj(t_data *d)
 	o = add_object(d->o, SPHERE, 1, 0, 10, 1);
 	o->color = put_col(CRED);
 	
-	o = add_object(d->o, PLANE, 0, 0, -1, 0);
+	o = add_object(d->o, PLANE, -1, 0, 0, 0);
 	o->color = put_col(CWHITE);
 	
-	o = add_object(d->o, PLANE, 0, 1, 0, 0);
-	o->color = put_col(CWHITE);
+	// o = add_object(d->o, PLANE, 0, 0, 0, 0);
+	// o->color = put_col(CWHITE);
 }
 
 static void				init_cam(t_cam *c)

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 12:00:52 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:03:51 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 17:55:40 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ int				find_intersection(t_object *o, t_light *l)
 {
 	t_object	*tmp;
 	t_hitpoint	h;
-	float		limit;
+	t_hitpoint	ret;
 	
+	ret.t = MAX_DIST;
 	tmp = o;
-	limit = l->radius ? l->radius : MAX_DIST;
 	while (tmp)
 	{
-		h.t = limit;
 		h = tmp->intersection(&l->r, tmp->obj);
-			// printf("the t: %f the norm : %f, %f, %f \n", h.t, h.n.x, h.n.y, h.n.z);
-		if (h.t > EPSILON && h.t < limit)
+		// h.p = vec_add(h.p, vec_scalar(h.n, EPSILON));
+		if (h.t >= EPSILON && h.t < ret.t)
 		{
-			return (1);
+			ret = h;
+			break;
 		}
 		tmp = tmp->next;
 	}
-	return (0);
+	return (!(ret.t == MAX_DIST));
 }
 
 t_hitpoint	find_closest_intersection(t_object *o, t_ray *r)

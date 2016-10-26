@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/03 17:42:02 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/24 19:40:46 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 15:43:54 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ t_vec3		vec_add(t_vec3 a, t_vec3 b)
 	a.x += b.x;
 	a.y += b.y;
 	a.z += b.z;
+	return (a);
+}
+
+t_vec3		vec_neg(t_vec3 a)
+{
+	a.x = -a.x;
+	a.y = -a.y;
+	a.z = -a.z;
 	return (a);
 }
 

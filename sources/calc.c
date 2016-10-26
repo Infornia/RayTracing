@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:33:30 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 18:08:05 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,30 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 	double		coef;
 	float		angle;
 	float		t;
+	t_ray		r;
+	t_hitpoint	h2;
 	
 	t = 0.0;
 	angle = 0.0;
-	if (l->type == SPOT || l->type == SPOTLIGHT)
+	if (l->type == SPOT)
 		l->r.dir = normalize(vec_sub(l->r.o, h->p));
-	else if (l->type == SPOTLIGHT)
-		angle = vec_dot(l->r.dir, l->spotlight);
-	coef = vec_dot(l->r.dir, h->n);
+	r.dir = vec_neg(l->r.dir);
+	coef = vec_dot(r.dir, h->n);
+	if (l->type == SPOTLIGHT)
+	{
+		l->spotlight = normalize(vec_sub(l->r.o, h->p));
+		angle = vec_dot(r.dir, l->spotlight);
+	}
 	if (coef > EPSILON && angle <= 0)
 	{
-		if (!find_intersection(d->o, l))
+		// return (c = put_col(CBLUE));
+		tt_print(&r, d->o, l);
+		vec_neg(r.dir);
+		// if (!find_intersection(d->o, l))
+		if (!find_intersection(d->o, &r))
 		{	
 			if (l->type == SPOTLIGHT)
-				c = add_col(c, scal_col(l->color, coef * angle));
+				c = add_col(c, scal_col(l->color, coef * -angle));
 			else
 				c = add_col(c, scal_col(l->color, coef));
 		}

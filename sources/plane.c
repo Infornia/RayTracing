@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 18:21:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/24 19:19:27 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 17:18:08 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ t_hitpoint		hitplane(t_ray *r, t_plane *p)
 	float		denum;
 	t_hitpoint	h;
 	
-	num = p->d - vec_dot(p->n, r->o);
-	denum = vec_dot(p->n, r->dir);
-	t = num / denum;
+	num = vec_dot(p->n, r->o);
+	denum = vec_dot(p->n, r->dir) + p->d;
+	t = -num / denum;
 	if (t < EPSILON)
 		return(miss());
 	h.t = t;

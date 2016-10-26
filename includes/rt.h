@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:25:41 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 15:44:14 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,14 @@ t_vec3			normalize(t_vec3 v);
 t_vec3			vec3_new(float x, float y, float z);
 t_vec3			vec_sub(t_vec3 a, t_vec3 b);
 t_vec3			vec_add(t_vec3 a, t_vec3 b);
+t_vec3			vec_neg(t_vec3 a);
 t_vec3			vec_mul(t_vec3 a, t_vec3 b);
 double			vec_dot(t_vec3 a, t_vec3 b);
 t_vec3			vec_scalar(t_vec3 v, float coef_mult);
+
+/*
+*******************UTILS.C
+*/
+void			tt_print(t_ray *r, t_object *o, t_light *l);
 
 #endif

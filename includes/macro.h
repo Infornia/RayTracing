@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:53:05 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 17:07:19 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/26 16:12:30 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define Y_HALF 		Y_WIN / 2
 # define X_HALF 		X_WIN / 2
 # define RATIO			X_WIN / Y_WIN
-# define FOV 			tan(45 * M_PI / 180)
+# define FOV 			tan(30 * M_PI / 180)
 
 /*
 ** Objects

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:10:59 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/26 17:18:04 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 17:10:08 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ t_hitpoint		hitsphere(t_ray *r, t_sphere *s)
 {
 	t_vec3		e;
 	t_hitpoint	h;
-	float		l;
-	float		det;
+	double		l;
+	double		det;
 
 	e = vec_sub(s->p, r->o);
 	l = vec_dot(r->dir, e);
 	det = l * l - vec_dot(e, e) + s->r * s->r;
-	if (det < 0.0)
+	if (det <= 0.0)
 		return (miss());
 	h.t = l - sqrt(det);
 	if (h.t < EPSILON)
@@ -44,8 +44,11 @@ t_hitpoint		hitsphere(t_ray *r, t_sphere *s)
 	if (h.t < EPSILON)
 		return (miss());
 	e = vec_sub(r->o, s->p);
-	h.p = vec_add(r->o, vec_scalar(r->dir, h.t));
-	h.n = vec_scalar(vec_sub(h.p, s->p), 1 / s->r);
+	// h.p = vec_add(r->o, vec_scalar(r->dir, h.t));
+	h.p.x = r->o.x + r->dir.x * h.t - EPSILON;
+	h.p.y = r->o.y + r->dir.y * h.t - EPSILON;
+	h.p.z = r->o.z + r->dir.z * h.t - EPSILON;
+	h.n = normalize(vec_sub(h.p, s->p));
 	h.c = s->color;
 	// h.m = p->m;
 	return (h);

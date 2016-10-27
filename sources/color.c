@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:21:32 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:28:41 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 15:41:20 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_color		lim_col(t_color c)
 
 t_color		moy_col(t_color c)
 {
-	float	x;
+	double	x;
 	
 	x = c.r;
 	x = c.g > x ? c.g : x;
@@ -65,7 +65,7 @@ t_color		mult_col(t_color c, t_color c2)
 	return (c);
 }
 
-t_color		scal_col(t_color c, float scal)
+t_color		scal_col(t_color c, double scal)
 {
 	c.r *= scal;
 	c.g *= scal;

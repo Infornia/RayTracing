@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:53:05 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/26 16:12:30 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 15:18:11 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define SPHERE			0
 # define PLANE			1
 # define EPSILON		0.001
-# define MAX_DIST		20.0
+# define MAX_DIST		20000.0
 
 
 /*

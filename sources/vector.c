@@ -6,13 +6,13 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/03 17:42:02 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/26 15:43:54 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 17:11:04 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_vec3		vec3_new(float x, float y, float z)
+t_vec3		vec3_new(double x, double y, double z)
 {
 	t_vec3	v;
 	
@@ -24,9 +24,9 @@ t_vec3		vec3_new(float x, float y, float z)
 
 t_vec3		normalize(t_vec3 v)
 {
-	float l;
+	double l;
 
-	l = sqrtf(vec_dot(v, v));
+	l = sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
 	v.x /= l;
 	v.y /= l;
 	v.z /= l;
@@ -70,7 +70,7 @@ double			vec_dot(t_vec3 a, t_vec3 b)
 	return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z));
 }
 
-t_vec3			vec_scalar(t_vec3 v, float scal)
+t_vec3			vec_scalar(t_vec3 v, double scal)
 {
 	v.x *= scal;
 	v.y *= scal;

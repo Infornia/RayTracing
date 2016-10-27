@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 19:08:09 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 18:15:42 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 15:41:20 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_light			*create_light(t_light *l)
 	return (tmp);
 }
 
-t_light			*add_light(t_light *l, float x, float y, float z)
+t_light			*add_light(t_light *l, double x, double y, double z)
 {
 	t_ray		r;
 

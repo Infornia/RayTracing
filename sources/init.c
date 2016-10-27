@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:16:34 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 17:13:02 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 17:23:07 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void		init_obj(t_data *d)
 	o = add_object(d->o, SPHERE, 1, 0, 10, 1);
 	o->color = put_col(CRED);
 	
-	o = add_object(d->o, PLANE, 1, 0, 0, 0);
+	o = add_object(d->o, PLANE, -1, 0, 0, 0);
 	o->color = put_col(CWHITE);
 	
 	// o = add_object(d->o, PLANE, 0, 0, 0, 0);

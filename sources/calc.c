@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 17:11:57 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 17:22:49 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 	t_hitpoint	h2;
 	
 	r = l->r;
-	// if (l->type == SPOT)
-	// 	r.dir = normalize(vec_sub(r.o, h->p));
 	if (l->type == SPOT)
 		r.dir = normalize(vec_sub(h->p, r.o));
 	else if (l->type == SPOTLIGHT)

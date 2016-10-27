@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:19:54 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/25 15:36:55 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 18:58:25 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ int				key_hook(int key, t_data *d)
 	if (key == ESC)
 		destroy_mlx(d);
 	else if (key == DOWN)
-		--d->cam.p.z;
+		--d->r.o.z;
 	else if (key == UP)
-		++d->cam.p.z;
+		++d->r.o.z;
 	else if (key == LEFT)
-		--d->cam.p.x;
+		--d->r.o.x;
 	else if (key == RIGHT)
-		++d->cam.p.x;
+		++d->r.o.x;
 	else if (key == PLUS)
-		++d->cam.p.y;
+		++d->r.o.y;
 	else if (key == MINUS)
-		--d->cam.p.y;
+		--d->r.o.y;
 	draw(d);
 	return (1);
 }

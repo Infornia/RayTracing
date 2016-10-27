@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:10:59 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 17:18:50 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 18:30:01 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_hitpoint		hitsphere(t_ray *r, t_sphere *s)
 		h.t = l + sqrt(det);
 	if (h.t < EPSILON)
 		return (miss());
-	e = vec_sub(r->o, s->p);
 	h.p = vec_add(r->o, vec_scalar(r->dir, h.t));
 	h.n = normalize(vec_sub(h.p, s->p));
 	h.c = s->color;

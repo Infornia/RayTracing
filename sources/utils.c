@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 20:04:09 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/26 15:19:34 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/10/27 17:55:04 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		tt_print(t_ray *r, t_object *obj, t_light *light)
 {
-	static int	n = 2;
+	static int	n = 3;
 	t_object	*o;
 	t_light		*l;
 	

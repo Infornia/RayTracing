@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:19:12 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 19:27:06 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/01 17:59:32 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 	double		coef;
 	double		angle;
 	t_ray		r;
-	t_hitpoint	h2;
 	
 	angle = 1.0;
 	r.o = h->p;
@@ -33,9 +32,8 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 	coef = vec_dot(r.dir, h->n);
 	if (coef > 0)
 	{
-		h2 = find_closest_intersection(d->o, &r);
-		if (h2.t == MAX_DIST)
-			c = add_col(c, scal_col(l->color, coef * angle));
+		if (!find_intersection(d->o, r))
+			c = add_col(c, scal_col(add_col(l->color, h->c), coef * angle));
 	}
 	return (c);
 }
@@ -48,7 +46,7 @@ t_color			compute_color(t_data *d, t_hitpoint *h, t_color c)
 	while (l)
 	{
 		if (l->type == OMNI)
-			c = add_col(c, scal_col(l->color, 0.1));
+			c = add_col(c, scal_col(add_col(l->color, h->c), 0.1));
 		else if (l->type)
 			c = diffuse(d, h, l, c);
 			// c = add_col(c, scal_col(0.9, mult_col(diffuse(d, h, l, c), l->color)));

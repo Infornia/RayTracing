@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 17:11:28 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/01 17:36:48 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int				find_intersection(t_object *o, t_ray r);
 /*
 *******************LIGHT.C
 */
-t_light			*add_light(t_light *l, double x, double y, double z);
+t_light			*add_light(t_light *l, t_vec3 o, t_vec3 dir, unsigned int color);
 t_light			*create_light(t_light *l);
 
 /*
@@ -94,23 +94,29 @@ void			destroy_mlx(t_data *d);
 *******************OBJECT.C
 */
 
-t_object		*add_object(t_object *o, int type, int x, int y, int z, int r);
+t_object		*add_object(t_object *obj, double type, t_vec3 v, double r);
 t_object		*create_object(t_object *o);
 
 /*
 *******************PLANE.C
 */
 
+t_plane			*create_plane(t_vec3 n, double d);
 t_hitpoint		hitplane(t_ray *r, t_plane *p);
-t_plane			*create_plane(double vx, double vy, double vz, double d);
 
 /*
 *******************SPHERE.C
 */
 
-t_sphere		*create_sphere(int x, int y, int z, int r);
+t_sphere		*create_sphere(t_vec3 p, double r);
 t_hitpoint		hitsphere(t_ray *r, t_sphere *s);
 
+/*
+*******************SPHERE.C
+*/
+
+t_cone			*create_cone(t_vec3 p, double r, double h);
+t_hitpoint		hitcone(t_ray *r, t_cone *c);
 
 /*
 *******************VECTOR.C

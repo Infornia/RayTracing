@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:53:05 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 15:18:11 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/01 15:39:30 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@
 ** Objects
 */
 
-# define NB_OBJECT_TYPE	2
+# define NB_OBJECT_TYPE	4
 # define SPHERE			0
 # define PLANE			1
+# define CONE			2
+# define CYL			3
 # define EPSILON		0.001
-# define MAX_DIST		20000.0
+# define MAX_DIST		100.0
 
 
 /*

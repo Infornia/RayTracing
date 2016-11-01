@@ -6,23 +6,20 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:10:59 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 18:30:01 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/01 17:48:56 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_sphere		*create_sphere(int x, int y, int z, int r)
+t_sphere		*create_sphere(t_vec3 p, double r)
 {
 	t_sphere	*s;
-	t_vec3		p;
 
 	s = tt_malloc(sizeof(t_sphere));
-	p.x = x;
-	p.y = y;
-	p.z = z;
 	s->p = p;
 	s->r = r;
+	s->r_square = r * r;
 	return (s);
 }
 
@@ -35,12 +32,13 @@ t_hitpoint		hitsphere(t_ray *r, t_sphere *s)
 
 	e = vec_sub(s->p, r->o);
 	l = vec_dot(r->dir, e);
-	det = l * l - vec_dot(e, e) + s->r * s->r;
+	det = l * l - vec_dot(e, e) + s->r_square;
 	if (det <= 0.0)
 		return (miss());
-	h.t = l - sqrt(det);
+	det = sqrt(det);
+	h.t = l - det;
 	if (h.t < EPSILON)
-		h.t = l + sqrt(det);
+		h.t = l + det;
 	if (h.t < EPSILON)
 		return (miss());
 	h.p = vec_add(r->o, vec_scalar(r->dir, h.t));

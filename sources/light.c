@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 19:08:09 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 15:41:20 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/01 17:36:15 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ t_light			*create_light(t_light *l)
 	return (tmp);
 }
 
-t_light			*add_light(t_light *l, double x, double y, double z)
+t_light			*add_light(t_light *l, t_vec3 o, t_vec3 dir, unsigned int color)
 {
 	t_ray		r;
 
 	l = create_light(l);
-	r.o.x = x;
-	r.o.y = y;
-	r.o.z = z;
+	r.o = o;
+	r.dir = normalize(dir);
 	l->r = r;
 	l->angle = 0;
+	l->color = put_col(color);
 	return (l);
 }

@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/10/27 18:46:55 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/01 16:40:06 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ typedef struct			s_vec3
 	double				y;
 	double				z;
 }						t_vec3;
+
+typedef struct			s_param
+{
+	double				a;
+	double				b;
+	double				c;
+	double				det;
+}						t_param;
 
 struct					s_ray
 {
@@ -65,8 +73,17 @@ typedef struct			s_sphere
 {
 	t_vec3				p;
 	double				r;
+	double				r_square;
 	t_color				color;
 }						t_sphere;
+
+typedef struct			s_cone
+{
+	t_vec3				p;
+	double				r;
+	double				h;
+	t_color				color;
+}						t_cone;
 
 
 typedef struct			s_plane

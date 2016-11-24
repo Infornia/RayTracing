@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 12:45:06 by mwilk             #+#    #+#             */
-/*   Updated: 2016/11/08 11:58:53 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/10 17:21:02 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int				key_hook(int key, t_data *d);
 
 t_hitpoint		miss(void);
 t_hitpoint		find_closest_intersection(t_object *o, t_ray *r);
-int				find_intersection(t_object *o, t_ray r);
+int				find_intersection(t_object *o, t_ray *r);
 
 /*
 *******************LIGHT.C

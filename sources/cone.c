@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 12:17:36 by mwilk             #+#    #+#             */
-/*   Updated: 2016/11/08 11:58:46 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/10 18:31:10 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_hitpoint		hitcone(t_ray *r, t_cone *c)
 	if (h.t < EPSILON)
 		return (miss());
 	h.p = vec_add(r->o, vec_scalar(r->dir, h.t));
-	h.n = normalize(vec3_new(h.p.x - c->p.x, 0, h.p.z - c->p.z));
+	h.n = normalize((t_vec3){h.p.x - c->p.x, 0, h.p.z - c->p.z});
 	h.c = c->color;
 	// h.m = p->m;
 	return (h);

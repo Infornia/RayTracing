@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:53:05 by mwilk             #+#    #+#             */
-/*   Updated: 2016/11/08 11:58:51 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/16 16:39:13 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 # define X_HALF 		X_WIN / 2
 # define RATIO			X_WIN / Y_WIN
 # define FOV 			tan(30 * M_PI / 180)
+# define EPSILON		0.001
+# define MAX_DIST		100.0
 
 /*
-** Objects
+** Lights
 */
 
 # define OMNI			0
@@ -36,13 +38,13 @@
 ** Objects
 */
 
+# define VEC3(x, y ,z)	(t_vec3){x, y, z}
+# define COLOR(r, g ,b)	(t_color){r, g, b}
 # define NB_OBJECT_TYPE	4
 # define SPHERE			0
 # define PLANE			1
 # define CONE			2
 # define CYL			3
-# define EPSILON		0.001
-# define MAX_DIST		100.0
 
 
 /*
@@ -69,6 +71,7 @@
 */
 
 # define ABS(x)			((x) < 0 ? -(x) : (x))
+# define SIGN(x)		((x) < 0 ? -1 : 1)
 
 /*
 **keys

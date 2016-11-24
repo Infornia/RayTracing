@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 17:14:15 by mwilk             #+#    #+#             */
-/*   Updated: 2016/11/08 11:58:48 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/16 16:45:19 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void			render(t_data *d)
 	int			y;
 
 	y = Y_WIN;
-	while (y--)
+	while (--y)
 	{
 		x = X_WIN;
-		while (x--)
+		while (--x)
 		{
 			d->r.dir = get_ray_dir(x, y);
-			d->c = put_col(CBLACK);
+			d->c = COLOR(0, 0, 0);
 			d->h = find_closest_intersection(d->o, &d->r);
 			if (d->h.t < MAX_DIST)
 				d->c = compute_color(d, &d->h, d->c);

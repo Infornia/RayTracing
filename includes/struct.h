@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 15:51:38 by mwilk             #+#    #+#             */
-/*   Updated: 2016/11/08 11:58:53 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/10 17:15:05 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct			s_cone
 
 typedef struct			s_plane
 {
+	t_vec3				p;
 	t_vec3				n;
 	double				d;
 	t_color				color;

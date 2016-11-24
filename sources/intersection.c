@@ -6,7 +6,7 @@
 /*   By: mwilk <mwilk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 12:00:52 by mwilk             #+#    #+#             */
-/*   Updated: 2016/11/08 11:58:45 by mwilk            ###   ########.fr       */
+/*   Updated: 2016/11/10 17:20:52 by mwilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_hitpoint		miss(void)
 	return (h);
 }
 
-int				find_intersection(t_object *o, t_ray r)
+int				find_intersection(t_object *o, t_ray *r)
 {
 	t_object	*tmp;
 	t_hitpoint	h;
@@ -29,7 +29,7 @@ int				find_intersection(t_object *o, t_ray r)
 	tmp = o;
 	while (tmp)
 	{
-		h = tmp->intersection(&r, tmp->obj);
+		h = tmp->intersection(r, tmp->obj);
 		if (h.t < MAX_DIST)
 			return (1);
 		tmp = tmp->next;

@@ -19,7 +19,7 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 	double		coef;
 	double		angle;
 	t_ray		r;
-	
+
 	angle = 1.0;
 	r.o = h->p;
 	r.dir = normalize(vec_sub(r.o, l->r.o));
@@ -41,7 +41,7 @@ static t_color	diffuse(t_data *d, t_hitpoint *h, t_light *l, t_color c)
 t_color			compute_color(t_data *d, t_hitpoint *h, t_color c)
 {
 	t_light		*l;
-	
+
 	l = d->l;
 	while (l)
 	{

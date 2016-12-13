@@ -30,13 +30,9 @@ t_hitpoint		hitcone(t_ray *r, t_cone *c)
 	double		k;
 	t_vec3		e;
 
-	e.x = r->o.x - c->p.x;
-	e.y = r->o.y - c->p.y;
-	e.z = r->o.z - c->p.z;
-	
-	// k = c->r / c->h;
-	// k = k * k;
-	k = 1;
+	e = VEC3(r->o.x - c->p.x, r->o.y - c->p.y, r->o.z - c->p.z);
+	k = c->r / c->h;
+	k = k * k;
 	p.a = r->dir.x * r->dir.x + r->dir.z * r->dir.z - r->dir.y * r->dir.y * k;
 	p.b = 2 * (r->dir.x * e.x + r->dir.z * e.z - r->dir.y * e.y * k);
 	p.c = e.x * e.x + e.z * e.z - e.y * e.y * k;

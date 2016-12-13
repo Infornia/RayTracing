@@ -25,8 +25,11 @@ int				main(int ac, char **av)
 	(void)av;
 	if (ac == 2)
 	{
+		tt_pl("Init");
 		d = (t_data *)init();
+		tt_pl("Draw");
 		draw(d);
+		tt_pl("Hooks");
 		mlx_expose_hook(d->win, expose_hook, d);
 		mlx_hook(d->win, 2, 1, key_hook, d);
 		mlx_loop(d->mlx);

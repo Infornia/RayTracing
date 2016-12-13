@@ -34,6 +34,7 @@ void			render(t_data *d)
 		x = X_WIN;
 		while (--x)
 		{
+			// printf("%i,%i", x,y);
 			d->r.dir = get_ray_dir(x, y);
 			d->c = COLOR(0, 0, 0);
 			d->h = find_closest_intersection(d->o, &d->r);
@@ -50,6 +51,7 @@ void			draw(t_data *d)
 	double	dframe;
 
 	ft_bzero(d->dimg, d->max_size);
+	printf("Size %d", d->size);
 	d->lastime = clock();
 	render(d);
 	d->time = clock();

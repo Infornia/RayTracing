@@ -28,9 +28,12 @@ void			destroy_mlx(t_data *d)
 void			init_mlx(t_data *d)
 {
 	d->mlx = mlx_init();
-	d->win = mlx_new_window(d->mlx, X_WIN, Y_WIN, "RT");
-	d->img = mlx_new_image(d->mlx, X_WIN, Y_WIN);
-	d->dimg = mlx_get_data_addr(d->img, &d->bpp, &d->size, &d->endian);
+	if(!(d->win = mlx_new_window(d->mlx, X_WIN, Y_WIN, "RT")))
+		exit(tt_pl("window open failed"));
+	if(!(d->img = mlx_new_image(d->mlx, X_WIN, Y_WIN)))
+		exit(tt_pl("image creation failed"));
+	if(!(d->dimg = mlx_get_data_addr(d->img, &d->bpp, &d->size, &d->endian)))
+		exit(tt_pl("Get image data failed"));
 	d->bpp /= 8;
-	d->max_size = (unsigned int)(d->size * Y_WIN + d->bpp * X_WIN);
+	d->max_size = (unsigned int)(d->size * Y_WIN);
 }
